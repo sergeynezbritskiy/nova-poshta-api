@@ -1,0 +1,13 @@
+{
+    "name": "sergeynezbritskiy/nova-poshta-api",
+    "description": "Library for connecting to Nova Poshta API",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "SergeyNezbritskiy\\NovaPoshtaApi\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
