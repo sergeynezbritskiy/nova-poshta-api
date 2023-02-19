@@ -17,13 +17,16 @@ class Connection
     private const API_URI = 'https://api.novaposhta.ua/v2.0/json/';
     private const ERROR_MSG_TEMPLATE = 'Connection to Nova Poshta API failed: %s';
     private string $apiKey;
+    private HttpClient $client;
 
     /**
      * @param string $apiKey
+     * @param HttpClient $client
      */
-    public function __construct(string $apiKey)
+    public function __construct(string $apiKey, HttpClient $client)
     {
         $this->apiKey = $apiKey;
+        $this->client = $client;
     }
 
     /**
@@ -42,7 +45,7 @@ class Connection
                 'calledMethod' => $method,
                 'methodProperties' => $params
             ];
-            $response = $this->getClient()->request('POST', self::API_URI, [RequestOptions::JSON => $request]);
+            $response = $this->client->request('POST', self::API_URI, [RequestOptions::JSON => $request]);
             if ($response->getStatusCode() !== 200) {
                 throw new NovaPoshtaApiException(sprintf(self::ERROR_MSG_TEMPLATE, $response->getReasonPhrase()));
             }
@@ -57,14 +60,6 @@ class Connection
         } catch (GuzzleException $e) {
             throw new NovaPoshtaApiException(sprintf(self::ERROR_MSG_TEMPLATE, $e->getMessage()), $e->getCode(), $e);
         }
-    }
-
-    /**
-     * @return HttpClient
-     */
-    private function getClient(): HttpClient
-    {
-        return new HttpClient();
     }
 
     /**

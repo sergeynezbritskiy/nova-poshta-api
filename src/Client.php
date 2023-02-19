@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\NovaPoshta;
 
+use GuzzleHttp\Client as HttpClient;
 use PHPUnit\Logging\Exception;
 use SergeyNezbritskiy\NovaPoshta\Models\Address;
 
@@ -45,7 +46,7 @@ class Client
     private function getConnection(): Connection
     {
         if (empty($this->connection)) {
-            $this->connection = new Connection($this->apiKey);
+            $this->connection = new Connection($this->apiKey, new HttpClient());
         }
         return $this->connection;
     }

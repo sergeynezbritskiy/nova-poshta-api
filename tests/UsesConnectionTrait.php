@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\NovaPoshta\Tests;
 
+use GuzzleHttp\Client;
 use RuntimeException;
 use SergeyNezbritskiy\NovaPoshta\Connection;
 
@@ -18,7 +19,7 @@ trait UsesConnectionTrait
             if (empty($apiKey)) {
                 throw new RuntimeException('apiKey not provided. Please pass it through phpunit.xml or env variables');
             }
-            $this->client = new Connection($apiKey);
+            $this->client = new Connection($apiKey, new Client());
         }
         return $this->client;
     }
