@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SergeyNezbritskiy\NovaPoshta\Tests;
+namespace SergeyNezbritskiy\NovaPoshta\Tests\Unit;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
