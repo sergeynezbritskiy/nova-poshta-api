@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\NovaPoshta;
 
-use Exception;
-use GuzzleHttp\Client;
+use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
@@ -16,6 +15,7 @@ use Psr\Http\Message\ResponseInterface;
 class Connection
 {
     private const API_URI = 'https://api.novaposhta.ua/v2.0/json/';
+    private const ERROR_MSG_TEMPLATE = 'Connection to Nova Poshta API failed: %s';
     private string $apiKey;
 
     /**
@@ -44,26 +44,27 @@ class Connection
             ];
             $response = $this->getClient()->request('POST', self::API_URI, [RequestOptions::JSON => $request]);
             if ($response->getStatusCode() !== 200) {
-                $this->throwException($response->getReasonPhrase());
+                throw new NovaPoshtaApiException(sprintf(self::ERROR_MSG_TEMPLATE, $response->getReasonPhrase()));
             }
 
             $body = $this->getResponseBody($response);
 
             if ($body['success'] === false) {
-                $this->throwException(array_shift($body['errors']) ?: array_shift($body['warnings']));
+                $error = array_shift($body['errors']) ?: array_shift($body['warnings']);
+                throw new NovaPoshtaApiException(sprintf(self::ERROR_MSG_TEMPLATE, $error));
             }
             return $body['data'];
         } catch (GuzzleException $e) {
-            $this->throwException($e->getMessage(), $e);
+            throw new NovaPoshtaApiException(sprintf(self::ERROR_MSG_TEMPLATE, $e->getMessage()), $e->getCode(), $e);
         }
     }
 
     /**
-     * @return Client
+     * @return HttpClient
      */
-    private function getClient(): Client
+    private function getClient(): HttpClient
     {
-        return new Client();
+        return new HttpClient();
     }
 
     /**
@@ -79,14 +80,5 @@ class Connection
             throw new NovaPoshtaApiException('Invalid response from Nova Poshta API');
         }
         return $result;
-    }
-
-    /**
-     * @throws NovaPoshtaApiException
-     */
-    private function throwException(string $error, ?Exception $exception = null): void
-    {
-        $message = 'Connection to Nova Poshta API failed: %s';
-        throw new NovaPoshtaApiException(sprintf($message, $error), $exception->getCode() ?? 0, $exception);
     }
 }
