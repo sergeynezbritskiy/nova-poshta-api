@@ -1,0 +1,24 @@
+os:
+- linux
+
+language: php
+
+before_script:
+- composer update
+
+jobs:
+  include:
+  - script: composer run phpcs
+  - script: composer run phpmd
+  - script: composer run tests
+
+php:
+- 8.1
+- 8.2
+- nightly
+
+matrix:
+  fast_finish: true
+
+notifications:
+  email: true

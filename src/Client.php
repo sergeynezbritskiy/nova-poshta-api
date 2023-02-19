@@ -13,7 +13,7 @@ use SergeyNezbritskiy\NovaPoshta\Models\Address;
  * Class-connector with NovaPoshta API
  *
  * @property Address $address
- * @see https://developers.novaposhta.ua/documentation
+ * @see      https://developers.novaposhta.ua/documentation
  */
 class Client
 {

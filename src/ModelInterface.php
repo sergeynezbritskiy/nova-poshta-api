@@ -6,5 +6,4 @@ namespace SergeyNezbritskiy\NovaPoshta;
 
 interface ModelInterface
 {
-
 }

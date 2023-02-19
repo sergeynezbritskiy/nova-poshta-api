@@ -8,6 +8,7 @@ use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 
 class Address implements ModelInterface
 {
+    private const MODEL_NAME = 'Address';
     private Connection $connection;
 
     /**
@@ -27,10 +28,11 @@ class Address implements ModelInterface
      */
     public function getCities(int $page = 1, int $limit = PHP_INT_MAX, string $search = null): array
     {
-        return $this->connection->post('Address', 'getCities', array_filter([
+        $params = array_filter([
             'Page' => $page,
             'Limit' => $limit,
             'FindByString' => $search,
-        ]));
+        ]);
+        return $this->connection->post(self::MODEL_NAME, 'getCities', $params);
     }
 }
