@@ -35,4 +35,26 @@ class Address implements ModelInterface
         ]);
         return $this->connection->post(self::MODEL_NAME, 'getCities', $params);
     }
+
+    /**
+     * @param array $filters Available filters are: CityName, CityRef, TypeOfWarehouseRef, WarehouseId
+     * @param int $page
+     * @param int $limit
+     * @param string $lang
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function getWarehouses(array $filters = [], int $page = 1, int $limit = 1000, string $lang = 'UA'): array
+    {
+        $params = array_filter([
+            'CityName' => $filters['CityName'] ?? null,
+            'CityRef' => $filters['CityRef'] ?? null,
+            'TypeOfWarehouseRef' => $filters['TypeOfWarehouseRef'] ?? null,
+            'WarehouseId' => $filters['WarehouseId'] ?? null,
+            'Page' => $page,
+            'Limit' => $limit,
+            'Language' => $lang,
+        ]);
+        return $this->connection->post(self::MODEL_NAME, 'getWarehouses', $params);
+    }
 }
