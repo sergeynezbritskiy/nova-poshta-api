@@ -28,8 +28,8 @@ build:
 
       tests:
         override:
-          - command: ./vendor/bin/phpunit --coverage-clover ./coverage.xml
+          - command: ./vendor/bin/phpunit --coverage-clover ./var/coverage.xml
             on_node: 1
             coverage:
-              file: coverage.xml
+              file: var/coverage.xml
               format: php-clover
