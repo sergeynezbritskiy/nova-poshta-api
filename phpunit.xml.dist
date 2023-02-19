@@ -6,6 +6,11 @@
     <testsuite name="tests">
         <directory>tests</directory>
     </testsuite>
+    <coverage>
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+    </coverage>
 
     <php>
         <env name="apiKey" value=""/>
