@@ -89,10 +89,10 @@ class ConnectionTest extends TestCase
 
     /**
      * @param string $content
-     * @return ResponseInterface
+     * @return ResponseInterface|MockObject
      * @throws Exception
      */
-    private function createResponse(string $content): ResponseInterface
+    private function createResponse(string $content): ResponseInterface|MockObject
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getStatusCode')->willReturn(200);
