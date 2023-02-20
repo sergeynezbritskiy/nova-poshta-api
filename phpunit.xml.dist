@@ -18,7 +18,7 @@
     </coverage>
 
     <php>
-        <env name="apiKey" value=""/>
+        <env name="API_KEY" value=""/>
     </php>
 
 </phpunit>

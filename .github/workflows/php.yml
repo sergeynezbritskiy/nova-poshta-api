@@ -1,4 +1,4 @@
-name: PHP Composer
+name: Code verification
 
 on:
   push:
@@ -39,4 +39,6 @@ jobs:
         run: composer run phpmd
 
       - name: Run test suite
-        run: composer run tests
+        run:
+          export API_KEY=${{secrets.API_KEY}}
+          composer run tests

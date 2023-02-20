@@ -15,9 +15,9 @@ trait UsesConnectionTrait
     public function getConnection(): Connection
     {
         if (empty($this->client)) {
-            $apiKey = getenv('apiKey');
+            $apiKey = getenv('API_KEY');
             if (empty($apiKey)) {
-                throw new RuntimeException('apiKey not provided. Please pass it through phpunit.xml or env variables');
+                throw new RuntimeException('API_KEY not provided. Please pass it through phpunit.xml or env variables');
             }
             $this->client = new Connection($apiKey, new Client());
         }
