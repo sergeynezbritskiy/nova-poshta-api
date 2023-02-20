@@ -38,10 +38,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Setup PHP with Xdebug
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: xdebug
+
       - name: Install dependencies
         run: composer update --prefer-dist --no-progress
 
       - name: Run test suite
-        run:
+        run: |
           export API_KEY=${{secrets.API_KEY}}
           composer run tests
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
