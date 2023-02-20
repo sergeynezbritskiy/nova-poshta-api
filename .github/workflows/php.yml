@@ -1,4 +1,4 @@
-name: Code verification
+name: Code Verification
 
 on:
   push:
@@ -10,33 +10,36 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  coding-guidelines:
+    name: Coding Guidelines
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate --strict
-
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-
       - name: Install dependencies
         run: composer update --prefer-dist --no-progress
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate --strict
 
       - name: Run codesniffer
         run: composer run phpcs
 
       - name: Run mess detector
         run: composer run phpmd
+
+  tests:
+    name: Unit and Integration Tests
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-progress
 
       - name: Run test suite
         run:
