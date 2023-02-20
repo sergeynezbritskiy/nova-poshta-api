@@ -36,7 +36,7 @@ class ConnectionTest extends TestCase
     public function testException(): void
     {
         $exceptionMock = new TransferException('Test');
-        $this->clientMock->method('request')->willThrowException($exceptionMock);
+        $this->clientMock->expects($this->once())->method('request')->willThrowException($exceptionMock);
         $this->expectException(NovaPoshtaApiException::class);
         $this->expectExceptionMessage('Connection to Nova Poshta API failed: Test');
         $this->object->post('model', 'method');
@@ -50,7 +50,7 @@ class ConnectionTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getStatusCode')->willReturn(201);
         $response->method('getReasonPhrase')->willReturn('Test');
-        $this->clientMock->method('request')->willReturn($response);
+        $this->clientMock->expects($this->once())->method('request')->willReturn($response);
 
         $this->expectException(NovaPoshtaApiException::class);
         $this->expectExceptionMessage('Connection to Nova Poshta API failed: Test');
@@ -79,7 +79,7 @@ class ConnectionTest extends TestCase
     public function testInvalidBody(): void
     {
         $response = $this->createResponse('NotAJson');
-        $this->clientMock->method('request')->willReturn($response);
+        $this->clientMock->expects($this->once())->method('request')->willReturn($response);
 
         $this->expectException(NovaPoshtaApiException::class);
         $this->expectExceptionMessage('Invalid response from Nova Poshta API');
