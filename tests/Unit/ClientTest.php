@@ -16,6 +16,8 @@ use SergeyNezbritskiy\NovaPoshta\Models\Address;
  */
 class ClientTest extends TestCase
 {
+    private Client $object;
+
     protected function setUp(): void
     {
         $this->object = new Client('some-key');
