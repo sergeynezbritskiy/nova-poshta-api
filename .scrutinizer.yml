@@ -41,5 +41,5 @@ build:
           - command: composer run tests
             on_node: 1
             coverage:
-              file: var/reports/coverage.xml
+              file: coverage.xml
               format: php-clover
