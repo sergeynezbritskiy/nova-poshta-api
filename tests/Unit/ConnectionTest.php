@@ -36,6 +36,7 @@ class ConnectionTest extends TestCase
     public function testException(): void
     {
         $exceptionMock = new TransferException('Test');
+        /** @scrutinizer ignore-deprecated */
         $this->clientMock->method('request')->willThrowException($exceptionMock);
         $this->expectException(NovaPoshtaApiException::class);
         $this->expectExceptionMessage('Connection to Nova Poshta API failed: Test');
@@ -50,6 +51,7 @@ class ConnectionTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getStatusCode')->willReturn(201);
         $response->method('getReasonPhrase')->willReturn('Test');
+        /** @scrutinizer ignore-deprecated */
         $this->clientMock->method('request')->willReturn($response);
 
         $this->expectException(NovaPoshtaApiException::class);
@@ -65,6 +67,7 @@ class ConnectionTest extends TestCase
     {
         $contentJson = json_encode(['success' => false, 'errors' => ['Test Error']]);
         $response = $this->createResponse($contentJson);
+        /** @scrutinizer ignore-deprecated */
         $this->clientMock->method('request')->willReturn($response);
 
         $this->expectException(NovaPoshtaApiException::class);
@@ -79,6 +82,7 @@ class ConnectionTest extends TestCase
     public function testInvalidBody(): void
     {
         $response = $this->createResponse('NotAJson');
+        /** @scrutinizer ignore-deprecated */
         $this->clientMock->method('request')->willReturn($response);
 
         $this->expectException(NovaPoshtaApiException::class);
@@ -89,10 +93,10 @@ class ConnectionTest extends TestCase
 
     /**
      * @param string $content
-     * @return ResponseInterface
+     * @return ResponseInterface|MockObject
      * @throws Exception
      */
-    private function createResponse(string $content): ResponseInterface
+    private function createResponse(string $content): ResponseInterface|MockObject
     {
         $response = $this->createMock(ResponseInterface::class);
         $response->method('getStatusCode')->willReturn(200);

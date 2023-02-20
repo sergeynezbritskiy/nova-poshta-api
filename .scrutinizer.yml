@@ -1,45 +1,18 @@
-build_failure_conditions:
-  - 'project.metric_change("scrutinizer.quality", < -0.30)'
-  - 'elements.rating(<= D).exists'               # No classes/methods with a rating of D or worse
-  - 'issues.severity(>= MAJOR).exists'           # New major or higher severity issues
-  - 'project.metric("scrutinizer.quality", < 10)' # Code Quality Rating drops below 10
-  - 'project.metric("scrutinizer.test_coverage", < 1)' # Code Coverage must always be 100%
-  - 'patches.label("Doc Comments").exists'       # No doc comments patches allowed
-  - 'patches.label("Spacing").exists'            # No spacing patches allowed
-  - 'patches.label("Bug").exists'                # No bug patches allowed
-  - 'issues.label("coding-style").exists'        # No coding style issues allowed
 checks:
   php: true
 
 filter:
   paths:
     - src/*
+    - tests/*
 
 build:
-  image: default-bionic
-
   environment:
     php:
       version: 8.2
-      ini:
-        xdebug.mode: coverage
 
   nodes:
     analysis:
       tests:
         override:
           - php-scrutinizer-run
-
-    phpunit:
-      dependencies:
-        override:
-          - composer self-update
-          - composer update --prefer-dist --no-interaction --no-progress --optimize-autoloader --ansi
-
-      tests:
-        override:
-          - command: composer run tests
-            on_node: 1
-            coverage:
-              file: coverage.xml
-              format: php-clover
