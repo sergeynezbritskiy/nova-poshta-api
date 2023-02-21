@@ -30,7 +30,7 @@
         "phpcs": "vendor/bin/phpcs -sp --standard=PSR12 src tests",
         "fix": "vendor/bin/phpcbf -sp --standard=PSR12 src tests",
         "phpmd": "vendor/bin/phpmd src,tests text phpmd.xml",
-        "tests": "vendor/bin/phpunit  --coverage-html=var/reports/coverage --coverage-clover=coverage.xml",
+        "tests": "vendor/bin/phpunit  --coverage-html=var/reports/coverage --coverage-clover=var/reports/coverage.xml",
         "all": [
             "@phpcs",
             "@phpmd",
