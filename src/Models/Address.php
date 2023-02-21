@@ -38,6 +38,24 @@ class Address implements ModelInterface
     }
 
     /**
+     * @param string $streetName
+     * @param string $settlementRef
+     * @param int $limit
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function searchSettlementStreets(string $streetName, string $settlementRef, int $limit = null): array
+    {
+        $params = array_filter([
+            'StreetName' => $streetName,
+            'SettlementRef' => $settlementRef,
+            'Limit' => $limit,
+        ]);
+        $result = $this->connection->post(self::MODEL_NAME, 'searchSettlementStreets', $params);
+        return array_shift($result);
+    }
+
+    /**
      * @param int $page
      * @param int $limit
      * @param string|null $search
