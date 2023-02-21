@@ -20,6 +20,24 @@ class Address implements ModelInterface
     }
 
     /**
+     * @param string $cityName
+     * @param int $page
+     * @param int $limit
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function searchSettlements(string $cityName, int $page = 1, int $limit = PHP_INT_MAX): array
+    {
+        $params = array_filter([
+            'CityName' => $cityName,
+            'Page' => $page,
+            'Limit' => $limit,
+        ]);
+        $result = $this->connection->post(self::MODEL_NAME, 'searchSettlements', $params);
+        return array_shift($result);
+    }
+
+    /**
      * @param int $page
      * @param int $limit
      * @param string|null $search
