@@ -20,6 +20,7 @@ class Address implements ModelInterface
     }
 
     /**
+     * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a0eb83ab-8512-11ec-8ced-005056b2dbe1
      * @param string $cityName
      * @param int $page
      * @param int $limit
@@ -38,9 +39,10 @@ class Address implements ModelInterface
     }
 
     /**
+     * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a1329635-8512-11ec-8ced-005056b2dbe1
      * @param string $streetName
      * @param string $settlementRef
-     * @param int $limit
+     * @param int|null $limit
      * @return array
      * @throws NovaPoshtaApiException
      */
@@ -56,6 +58,7 @@ class Address implements ModelInterface
     }
 
     /**
+     * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a1e6f0a7-8512-11ec-8ced-005056b2dbe1
      * @param int $page
      * @param int $limit
      * @param string|null $search
@@ -73,6 +76,7 @@ class Address implements ModelInterface
     }
 
     /**
+     * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a2322f38-8512-11ec-8ced-005056b2dbe1
      * @param array $filters Available filters are: CityName, CityRef, TypeOfWarehouseRef, WarehouseId
      * @param int $page
      * @param int $limit
