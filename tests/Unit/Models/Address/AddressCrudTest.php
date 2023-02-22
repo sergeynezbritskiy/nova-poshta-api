@@ -35,4 +35,15 @@ class AddressCrudTest extends TestCase
         $this->expectExceptionMessage('Note exceeds the limit of 40 symbols');
         $this->model->save('', '', '', '', $note);
     }
+
+    /**
+     * @throws NovaPoshtaApiException
+     */
+    public function testUpdateAddressTooLongNote(): void
+    {
+        $note = 'This is the note that exceeds forty symbols - the limit from Nova Poshta API';
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Note exceeds the limit of 40 symbols');
+        $this->model->update('', [], $note);
+    }
 }
