@@ -12,6 +12,7 @@ use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 class Counterparty implements ModelInterface
 {
     private const MODEL_NAME = 'Counterparty';
+
     private Connection $connection;
 
     /**
@@ -34,6 +35,6 @@ class Counterparty implements ModelInterface
             'Ref' => $counterpartyRef,
             'CounterpartyProperty' => $counterpartyProperty,
         ];
-        return $this->connection->post('Counterparty', 'getCounterpartyAddresses', $params);
+        return $this->connection->post(self::MODEL_NAME, 'getCounterpartyAddresses', $params);
     }
 }

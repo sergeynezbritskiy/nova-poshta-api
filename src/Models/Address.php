@@ -62,24 +62,22 @@ class Address implements ModelInterface
 
     /**
      * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a155d0d9-8512-11ec-8ced-005056b2dbe1
-     * @param string $ref
-     * @param string $streetRef
-     * @param string $building
-     * @param string $flat
+     * @param string $counterpartyRef
+     * @param array $address
      * @param string|null $note
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function save(string $ref, string $streetRef, string $building, string $flat, string $note = null): array
+    public function save(string $counterpartyRef, array $address, string $note = null): array
     {
         if ($note && strlen($note) > 40) {
             throw new RuntimeException('Note exceeds the limit of 40 symbols');
         }
         $params = array_filter([
-            'CounterpartyRef' => $ref,
-            'StreetRef' => $streetRef,
-            'BuildingNumber' => $building,
-            'Flat' => $flat,
+            'CounterpartyRef' => $counterpartyRef,
+            'StreetRef' => $address['StreetRef'],
+            'BuildingNumber' => $address['BuildingNumber'],
+            'Flat' => $address['Flat'],
             'Note' => $note
         ]);
         $result = $this->connection->post(self::MODEL_NAME, 'save', $params);
@@ -88,19 +86,18 @@ class Address implements ModelInterface
 
     /**
      * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a19ba934-8512-11ec-8ced-005056b2dbe1
-     * @param string $addressRef
      * @param array $address
      * @param string|null $note
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function update(string $addressRef, array $address, string $note = null): array
+    public function update(array $address, string $note = null): array
     {
         if ($note && strlen($note) > 40) {
             throw new RuntimeException('Note exceeds the limit of 40 symbols');
         }
         $params = array_filter([
-            'Ref' => $addressRef,
+            'Ref' => $address['Ref'],
             'CounterpartyRef' => $address['CounterpartyRef'],
             'StreetRef' => $address['StreetRef'],
             'BuildingNumber' => $address['BuildingNumber'],

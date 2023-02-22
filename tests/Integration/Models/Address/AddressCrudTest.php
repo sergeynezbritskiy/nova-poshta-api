@@ -53,7 +53,12 @@ class AddressCrudTest extends TestCase
     {
         $note = 'This address is for testing (created)';
         $flat = '111';
-        $actualResult = $this->model->save(self::COUNTERPARTY_REF, self::STREET_REF, '68', $flat, $note);
+        $address = [
+            'StreetRef' => self::STREET_REF,
+            'BuildingNumber' => '68',
+            'Flat' => $flat
+        ];
+        $actualResult = $this->model->save(self::COUNTERPARTY_REF, $address, $note);
         $this->assertAddress($actualResult, $flat, $note);
         return $actualResult['Ref'];
     }
@@ -68,12 +73,13 @@ class AddressCrudTest extends TestCase
         $note = 'This address is for testing (updated)';
         $flat = '333';
         $address = [
+            'Ref' => $addressRef,
             'CounterpartyRef' => self::COUNTERPARTY_REF,
             'StreetRef' => self::STREET_REF,
             'BuildingNumber' => '68',
             'Flat' => $flat,
         ];
-        $actualResult = $this->model->update($addressRef, $address, $note);
+        $actualResult = $this->model->update($address, $note);
 
         $this->assertAddress($actualResult, $flat, $note);
     }
