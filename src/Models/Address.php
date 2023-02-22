@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SergeyNezbritskiy\NovaPoshta\Models;
 
+use RuntimeException;
 use SergeyNezbritskiy\NovaPoshta\Connection;
 use SergeyNezbritskiy\NovaPoshta\ModelInterface;
 use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
@@ -55,6 +58,68 @@ class Address implements ModelInterface
         ]);
         $result = $this->connection->post(self::MODEL_NAME, 'searchSettlementStreets', $params);
         return array_shift($result);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a155d0d9-8512-11ec-8ced-005056b2dbe1
+     * @param string $ref
+     * @param string $streetRef
+     * @param string $building
+     * @param string $flat
+     * @param string|null $note
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function save(string $ref, string $streetRef, string $building, string $flat, string $note = null): array
+    {
+        if ($note && strlen($note) > 40) {
+            throw new RuntimeException('Note exceeds the limit of 40 symbols');
+        }
+        $params = array_filter([
+            'CounterpartyRef' => $ref,
+            'StreetRef' => $streetRef,
+            'BuildingNumber' => $building,
+            'Flat' => $flat,
+            'Note' => $note
+        ]);
+        $result = $this->connection->post(self::MODEL_NAME, 'save', $params);
+        return array_shift($result);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a19ba934-8512-11ec-8ced-005056b2dbe1
+     * @param string $addressRef
+     * @param array $address
+     * @param string|null $note
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function update(string $addressRef, array $address, string $note = null): array
+    {
+        if ($note && strlen($note) > 40) {
+            throw new RuntimeException('Note exceeds the limit of 40 symbols');
+        }
+        $params = array_filter([
+            'Ref' => $addressRef,
+            'CounterpartyRef' => $address['CounterpartyRef'],
+            'StreetRef' => $address['StreetRef'],
+            'BuildingNumber' => $address['BuildingNumber'],
+            'Flat' => $address['Flat'],
+            'Note' => $note
+        ]);
+        $result = $this->connection->post(self::MODEL_NAME, 'update', $params);
+        return array_shift($result);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a177069a-8512-11ec-8ced-005056b2dbe1
+     * @param string $addressRef
+     * @return void
+     * @throws NovaPoshtaApiException
+     */
+    public function delete(string $addressRef): void
+    {
+        $this->connection->post(self::MODEL_NAME, 'delete', ['Ref' => $addressRef]);
     }
 
     /**
