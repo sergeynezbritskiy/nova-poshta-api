@@ -97,10 +97,10 @@ class Address implements ModelInterface
             throw new RuntimeException('Note exceeds the limit of 40 symbols');
         }
         $params = array_filter([
-            'Ref' => $address['Ref'],
-            'CounterpartyRef' => $address['CounterpartyRef'],
-            'StreetRef' => $address['StreetRef'],
-            'BuildingNumber' => $address['BuildingNumber'],
+            'Ref' => $address['Ref'] ?? null,
+            'CounterpartyRef' => $address['CounterpartyRef'] ?? null,
+            'StreetRef' => $address['StreetRef'] ?? null,
+            'BuildingNumber' => $address['BuildingNumber'] ?? null,
             'Flat' => $address['Flat'],
             'Note' => $note
         ]);
@@ -120,6 +120,29 @@ class Address implements ModelInterface
     }
 
     /**
+     * https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a1c42723-8512-11ec-8ced-005056b2dbe1
+     * @param array $filters
+     * @param bool $warehouse
+     * @param int|null $page
+     * @param int $limit
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function getSettlements(array $filters, bool $warehouse, int $page = null, int $limit = 150): array
+    {
+        $params = array_filter([
+            'AreaRef' => $filters['AreaRef'] ?? null,
+            'Ref' => $filters['Ref'] ?? null,
+            'RegionRef' => $filters['RegionRef'] ?? null,
+            'FindByString' => $filters['FindByString'] ?? null,
+            'Warehouse' => (int)$warehouse,
+            'Page' => $page,
+            'Limit' => $limit,
+        ]);
+        return $this->connection->post('AddressGeneral', 'getSettlements', $params);
+    }
+
+    /**
      * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a1e6f0a7-8512-11ec-8ced-005056b2dbe1
      * @param int $page
      * @param int $limit
@@ -135,6 +158,15 @@ class Address implements ModelInterface
             'FindByString' => $search,
         ]);
         return $this->connection->post(self::MODEL_NAME, 'getCities', $params);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a20ee6e4-8512-11ec-8ced-005056b2dbe1
+     * @throws NovaPoshtaApiException
+     */
+    public function getAreas(): array
+    {
+        return $this->connection->post(self::MODEL_NAME, 'getAreas');
     }
 
     /**
@@ -158,5 +190,34 @@ class Address implements ModelInterface
             'Language' => $lang,
         ]);
         return $this->connection->post(self::MODEL_NAME, 'getWarehouses', $params);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a2587b53-8512-11ec-8ced-005056b2dbe1
+     * @throws NovaPoshtaApiException
+     */
+    public function getWarehouseTypes(): array
+    {
+        return $this->connection->post(self::MODEL_NAME, 'getWarehouseTypes');
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a27c20d7-8512-11ec-8ced-005056b2dbe1
+     * @param string $cityRef
+     * @param string $findByString
+     * @param int|null $page
+     * @param int|null $limit
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function getStreet(string $cityRef, string $findByString, int $page = null, int $limit = null): array
+    {
+        $params = array_filter([
+            'CityRef' => $cityRef,
+            'FindByString' => $findByString,
+            'Page' => $page,
+            'Limit' => $limit,
+        ]);
+        return $this->connection->post(self::MODEL_NAME, 'getStreet', $params);
     }
 }

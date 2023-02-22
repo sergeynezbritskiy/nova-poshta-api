@@ -39,12 +39,12 @@ class Connection
     public function post(string $model, string $method, array $params = []): array
     {
         try {
-            $request = [
+            $request = array_filter([
                 'apiKey' => $this->apiKey,
                 'modelName' => $model,
                 'calledMethod' => $method,
                 'methodProperties' => $params
-            ];
+            ]);
             $response = $this->client->request('POST', self::API_URI, [RequestOptions::JSON => $request]);
             if ($response->getStatusCode() !== 200) {
                 throw new NovaPoshtaApiException(sprintf(self::ERROR_MSG_TEMPLATE, $response->getReasonPhrase()));
