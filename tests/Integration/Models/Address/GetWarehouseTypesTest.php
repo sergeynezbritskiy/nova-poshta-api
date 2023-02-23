@@ -38,9 +38,14 @@ class GetWarehouseTypesTest extends TestCase
      */
     private function assertIsWarehouseType(array $type): void
     {
-        $this->assertCount(3, $type);
-        $this->assertArrayHasKey('Ref', $type);
-        $this->assertArrayHasKey('DescriptionRu', $type);
-        $this->assertArrayHasKey('Description', $type);
+        $expectedKeys = [
+            'Ref',
+            'DescriptionRu',
+            'Description',
+        ];
+        $actualKeys = array_keys($type);
+        sort($actualKeys);
+        sort($expectedKeys);
+        $this->assertSame($expectedKeys, $actualKeys);
     }
 }
