@@ -38,10 +38,15 @@ class GetAreasTest extends TestCase
      */
     private function assertIsArea(array $area): void
     {
-        $this->assertCount(4, $area);
-        $this->assertArrayHasKey('Ref', $area);
-        $this->assertArrayHasKey('AreasCenter', $area);
-        $this->assertArrayHasKey('DescriptionRu', $area);
-        $this->assertArrayHasKey('Description', $area);
+        $expectedKeys = [
+            'Ref',
+            'AreasCenter',
+            'DescriptionRu',
+            'Description',
+        ];
+        $actualKeys = array_keys($area);
+        sort($actualKeys);
+        sort($expectedKeys);
+        $this->assertSame($expectedKeys, $actualKeys);
     }
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\NovaPoshta\Models;
 
-use RuntimeException;
 use SergeyNezbritskiy\NovaPoshta\Connection;
 use SergeyNezbritskiy\NovaPoshta\ModelInterface;
 use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
@@ -21,6 +20,26 @@ class Counterparty implements ModelInterface
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
+    }
+
+    /**
+     * @param array $counterparty Array containing the necessary params.
+     *    $counterparty = [
+     *      'FirstName'             => (string) First name. Required.
+     *      'MiddleName'            => (string) Middle name. Required.
+     *      'LastName'              => (string) Last name. Required.
+     *      'Phone'                 => (string) Phone number. Required.
+     *      'Email'                 => (string) Email. Required.
+     *      'CounterpartyType'      => (string) Counterparty type. Required.
+     *      'CounterpartyProperty'  => (string) Counterparty property. Required.
+     *    ]
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function save(array $counterparty): array
+    {
+        $result = $this->connection->post(self::MODEL_NAME, 'save', $counterparty);
+        return array_shift($result);
     }
 
     /**
