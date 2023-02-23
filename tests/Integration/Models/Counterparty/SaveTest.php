@@ -34,7 +34,7 @@ class SaveTest extends TestCase
             'FirstName' => 'Іван' . $sfx,
             'MiddleName' => 'Іванович' . $sfx,
             'LastName' => 'Іванов' . $sfx,
-            'Phone' => rand(380_000_000_000, 380_000_999_999),
+            'Phone' => rand(380000000000, 380000999999),
             'Email' => 'ivan.ivanov@nova-poshta.test',
             'CounterpartyType' => 'PrivatePerson',
             'CounterpartyProperty' => 'Recipient',
