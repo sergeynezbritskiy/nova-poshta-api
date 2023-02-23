@@ -6,7 +6,6 @@ namespace SergeyNezbritskiy\NovaPoshta;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Utils;
 use Psr\Http\Message\ResponseInterface;

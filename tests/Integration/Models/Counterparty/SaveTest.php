@@ -7,7 +7,6 @@ namespace SergeyNezbritskiy\Tests\Integration\Models\Counterparty;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\NovaPoshta\Models\Counterparty;
-use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 use SergeyNezbritskiy\NovaPoshta\Tests\UsesConnectionTrait;
 
 class SaveTest extends TestCase
@@ -34,7 +33,7 @@ class SaveTest extends TestCase
             'FirstName' => 'Іван' . $sfx,
             'MiddleName' => 'Іванович' . $sfx,
             'LastName' => 'Іванов' . $sfx,
-            'Phone' => rand(380_000_000_000, 380_000_999_999),
+            'Phone' => rand(380000000000, 380000999999),
             'Email' => 'ivan.ivanov@nova-poshta.test',
             'CounterpartyType' => 'PrivatePerson',
             'CounterpartyProperty' => 'Recipient',
