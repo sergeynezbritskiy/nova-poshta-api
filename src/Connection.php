@@ -6,7 +6,9 @@ namespace SergeyNezbritskiy\NovaPoshta;
 
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Query;
 use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Utils;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -35,6 +37,7 @@ class Connection
      * @param array $params
      * @return array
      * @throws NovaPoshtaApiException
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function post(string $model, string $method, array $params = []): array
     {
@@ -45,7 +48,13 @@ class Connection
                 'calledMethod' => $method,
                 'methodProperties' => $params
             ]);
-            $response = $this->client->request('POST', self::API_URI, [RequestOptions::JSON => $request]);
+            $response = $this->client->request('POST', self::API_URI, [
+                RequestOptions::BODY => Utils::jsonEncode($request, JSON_UNESCAPED_UNICODE),
+                RequestOptions::HEADERS => [
+                    'content-type' => 'application/json',
+                    'Accept' => 'application/json'
+                ]
+            ]);
             if ($response->getStatusCode() !== 200) {
                 throw new NovaPoshtaApiException(sprintf(self::ERROR_MSG_TEMPLATE, $response->getReasonPhrase()));
             }

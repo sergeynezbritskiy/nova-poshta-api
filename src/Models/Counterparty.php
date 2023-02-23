@@ -23,29 +23,23 @@ class Counterparty implements ModelInterface
     }
 
     /**
-     * @param string $firstName
-     * @param string $middleName
-     * @param string $lastName
-     * @param string $phone
-     * @param string $email
-     * @param string $type
-     * @param string $property
+     * @param array $counterparty Array containing the necessary params.
+     *    $counterparty = [
+     *      'FirstName'             => (string) First name. Required.
+     *      'MiddleName'            => (string) Middle name. Required.
+     *      'LastName'              => (string) Last name. Required.
+     *      'Phone'                 => (string) Phone number. Required.
+     *      'Email'                 => (string) Email. Required.
+     *      'CounterpartyType'      => (string) Counterparty type. Required.
+     *      'CounterpartyProperty'  => (string) Counterparty property. Required.
+     *    ]
      * @return array
      * @throws NovaPoshtaApiException
-     * phpcs:disable Generic.Files.LineLength.TooLong
      */
-    public function save(string $firstName, string $middleName, string $lastName, string $phone, string $email, string $type, string $property): array
+    public function save(array $counterparty): array
     {
-        $params = [
-            'FirstName' => $firstName,
-            'MiddleName' => $middleName,
-            'LastName' => $lastName,
-            'Phone' => $phone,
-            'Email' => $email,
-            'CounterpartyType' => $type,
-            'CounterpartyProperty' => $property,
-        ];
-        return $this->connection->post(self::MODEL_NAME, 'save', $params);
+        $result = $this->connection->post(self::MODEL_NAME, 'save', $counterparty);
+        return array_shift($result);
     }
 
     /**
