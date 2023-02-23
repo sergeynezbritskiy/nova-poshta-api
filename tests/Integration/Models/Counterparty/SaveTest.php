@@ -7,7 +7,6 @@ namespace SergeyNezbritskiy\Tests\Integration\Models\Counterparty;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\NovaPoshta\Models\Counterparty;
-use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 use SergeyNezbritskiy\NovaPoshta\Tests\UsesConnectionTrait;
 
 class SaveTest extends TestCase
