@@ -41,9 +41,12 @@ class SavePrivatePersonTest extends TestCase
             'Email' => 'ivan.ivanov@nova-poshta.test',
             'CounterpartyProperty' => 'Recipient',
         ];
+
+        //create counterparty
         $actualResult = $this->model->savePrivatePerson($counterparty);
         $this->assertIsCounterparty($actualResult);
 
+        //update counterparty
         $counterparty['Ref'] = $actualResult['Ref'];
         $counterparty['MiddleName'] = 'Петрович' . $sfx;
         $counterparty['CityRef'] = self::CITY_REF;
@@ -51,6 +54,11 @@ class SavePrivatePersonTest extends TestCase
         $actualResult = $this->model->updatePrivatePerson($counterparty);
         $this->assertSame($counterparty['MiddleName'], $actualResult['MiddleName']);
 
+        //get counterparty options
+        $counterpartyOptions = $this->model->getCounterpartyOptions($counterparty['Ref']);
+        $this->assertIsCounterpartyOptions($counterpartyOptions);
+
+        //delete counterparty
         $this->expectExceptionMessage('Counterparty PrivatePerson can\'t be deleted');
         $this->model->delete($counterparty['Ref']);
     }
@@ -68,6 +76,18 @@ class SavePrivatePersonTest extends TestCase
         $this->assertArrayHasKey('Counterparty', $counterparty);
         $this->assertArrayHasKey('EDRPOU', $counterparty);
         $this->assertArrayHasKey('CounterpartyType', $counterparty);
+    }
+
+    /**
+     * @param array $counterpartyOptions
+     * @return void
+     */
+    private function assertIsCounterpartyOptions(array $counterpartyOptions): void
+    {
+        $this->assertArrayHasKey('Debtor', $counterpartyOptions);
+        $this->assertArrayHasKey('DebtorParams', $counterpartyOptions);
+        $this->assertArrayHasKey('SecurePayment', $counterpartyOptions);
+        $this->assertArrayHasKey('MainCounterparty', $counterpartyOptions);
     }
 
     /**

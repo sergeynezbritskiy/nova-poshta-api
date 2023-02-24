@@ -31,10 +31,10 @@ class SaveOrganisationTest extends TestCase
             'EDRPOU' => '42844961',
             'CounterpartyProperty' => 'Recipient',
         ];
-        $actualResult = $this->model->saveOrganisation($counterparty);
-        $this->assertIsCounterparty($actualResult);
+        $counterparty = $this->model->saveOrganisation($counterparty);
+        $this->assertIsCounterparty($counterparty);
 
-        $this->model->delete($actualResult['Ref']);
+        $this->model->delete($counterparty['Ref']);
     }
 
     /**

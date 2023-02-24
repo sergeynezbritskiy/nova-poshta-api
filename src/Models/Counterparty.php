@@ -94,6 +94,18 @@ class Counterparty implements ModelInterface
     }
 
     /**
+     * @see https://developers.novaposhta.ua/view/model/a28f4b04-8512-11ec-8ced-005056b2dbe1/method/a332efbf-8512-11ec-8ced-005056b2dbe1
+     * @param string $ref
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function getCounterpartyOptions(string $ref): array
+    {
+        $result = $this->connection->post(self::MODEL_NAME, 'getCounterpartyOptions', ['Ref' => $ref]);
+        return array_shift($result);
+    }
+
+    /**
      * @param string $counterpartyRef
      * @param string $counterpartyProperty
      * @return array
