@@ -10,6 +10,10 @@ use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 
 class Counterparty implements ModelInterface
 {
+    public const COUNTERPARTY_PROPERTY_SENDER = 'Sender';
+    public const COUNTERPARTY_PROPERTY_RECIPIENT = 'Recipient';
+    public const COUNTERPARTY_PROPERTY_THIRD_PERSON = 'ThirdPerson';
+
     private const MODEL_NAME = 'Counterparty';
 
     private Connection $connection;
@@ -103,6 +107,38 @@ class Counterparty implements ModelInterface
     {
         $result = $this->connection->post(self::MODEL_NAME, 'getCounterpartyOptions', ['Ref' => $ref]);
         return array_shift($result);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a28f4b04-8512-11ec-8ced-005056b2dbe1/method/a3575a67-8512-11ec-8ced-005056b2dbe1
+     * @param string $ref
+     * @param int $page
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function getCounterpartyContactPersons(string $ref, int $page = 1): array
+    {
+        $params = [
+            'Ref' => $ref,
+            'Page' => $page
+        ];
+        return $this->connection->post(self::MODEL_NAME, 'getCounterpartyContactPersons', $params);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a28f4b04-8512-11ec-8ced-005056b2dbe1/method/a37a06df-8512-11ec-8ced-005056b2dbe1
+     * @param string $counterpartyProperty
+     * @param int $page
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function getCounterparties(string $counterpartyProperty, int $page = 1): array
+    {
+        $params = [
+            'CounterpartyProperty' => $counterpartyProperty,
+            'Page' => $page
+        ];
+        return $this->connection->post(self::MODEL_NAME, 'getCounterparties', $params);
     }
 
     /**

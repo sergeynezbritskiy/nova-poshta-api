@@ -15,7 +15,7 @@ class AddressCrudTest extends TestCase
     use UsesConnectionTrait;
 
     /**
-     * City Kharkov
+     * Counterparty Ref
      */
     private const COUNTERPARTY_REF = '98d078a0-e096-11e6-8ba8-005056881c6b';
 

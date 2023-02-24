@@ -58,6 +58,10 @@ class SavePrivatePersonTest extends TestCase
         $counterpartyOptions = $this->model->getCounterpartyOptions($counterparty['Ref']);
         $this->assertIsCounterpartyOptions($counterpartyOptions);
 
+        //get counterparty contact persons
+        $contactPersons = $this->model->getCounterpartyContactPersons($counterparty['Ref']);
+        $this->assertIsContactPerson(array_shift($contactPersons));
+
         //delete counterparty
         $this->expectExceptionMessage('Counterparty PrivatePerson can\'t be deleted');
         $this->model->delete($counterparty['Ref']);
@@ -76,6 +80,21 @@ class SavePrivatePersonTest extends TestCase
         $this->assertArrayHasKey('Counterparty', $counterparty);
         $this->assertArrayHasKey('EDRPOU', $counterparty);
         $this->assertArrayHasKey('CounterpartyType', $counterparty);
+    }
+
+    /**
+     * @param array $contactPerson
+     * @return void
+     */
+    private function assertIsContactPerson(array $contactPerson): void
+    {
+        $this->assertArrayHasKey('Ref', $contactPerson);
+        $this->assertArrayHasKey('Description', $contactPerson);
+        $this->assertArrayHasKey('Phones', $contactPerson);
+        $this->assertArrayHasKey('FirstName', $contactPerson);
+        $this->assertArrayHasKey('LastName', $contactPerson);
+        $this->assertArrayHasKey('MiddleName', $contactPerson);
+        $this->assertArrayHasKey('Email', $contactPerson);
     }
 
     /**
