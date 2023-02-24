@@ -13,6 +13,11 @@ class SavePrivatePersonTest extends TestCase
 {
     use UsesConnectionTrait;
 
+    /**
+     * Kharkiv city ref
+     */
+    private const CITY_REF = 'db5c88e0-391c-11dd-90d9-001a92567626';
+
     private Counterparty $model;
 
     protected function setUp(): void
@@ -38,6 +43,16 @@ class SavePrivatePersonTest extends TestCase
         ];
         $actualResult = $this->model->savePrivatePerson($counterparty);
         $this->assertIsCounterparty($actualResult);
+
+        $counterparty['Ref'] = $actualResult['Ref'];
+        $counterparty['MiddleName'] = 'Петрович' . $sfx;
+        $counterparty['CityRef'] = self::CITY_REF;
+
+        $actualResult = $this->model->updatePrivatePerson($counterparty);
+        $this->assertSame($counterparty['MiddleName'], $actualResult['MiddleName']);
+
+        $this->expectExceptionMessage('Counterparty PrivatePerson can\'t be deleted');
+        $this->model->delete($counterparty['Ref']);
     }
 
     /**

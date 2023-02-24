@@ -23,6 +23,7 @@ class Counterparty implements ModelInterface
     }
 
     /**
+     * @see https://developers.novaposhta.ua/view/model/a28f4b04-8512-11ec-8ced-005056b2dbe1/method/0ae5dd75-8a5f-11ec-8ced-005056b2dbe1
      * @param array $counterparty Array containing the necessary params.
      *    $counterparty = [
      *      'FirstName'             => (string) First name. Required.
@@ -43,9 +44,10 @@ class Counterparty implements ModelInterface
     }
 
     /**
+     * https://developers.novaposhta.ua/view/model/a28f4b04-8512-11ec-8ced-005056b2dbe1/method/bc3c44c7-8a8a-11ec-8ced-005056b2dbe1
      * @param array $counterparty Array containing the necessary params.
      *    $counterparty = [
-     *      'EDRPOU'                 => (string) EDRPOU. Required.
+     *      'EDRPOU'                => (string) EDRPOU. Required.
      *      'CounterpartyProperty'  => (string) Counterparty property. Optional.
      *    ]
      * @return array
@@ -56,6 +58,39 @@ class Counterparty implements ModelInterface
         $counterparty['CounterpartyType'] = 'Organization';
         $result = $this->connection->post(self::MODEL_NAME, 'save', $counterparty);
         return array_shift($result);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a28f4b04-8512-11ec-8ced-005056b2dbe1/method/0ae5dd75-8a5f-11ec-8ced-005056b2dbe1
+     * @param array $counterparty Array containing the necessary params.
+     *    $counterparty = [
+     *      'Ref'                   => (string) Identifier. Required.
+     *      'FirstName'             => (string) First name. Required.
+     *      'MiddleName'            => (string) Middle name. Required.
+     *      'LastName'              => (string) Last name. Required.
+     *      'Phone'                 => (string) Phone number. Optional.
+     *      'Email'                 => (string) Email. Optional.
+     *      'CounterpartyProperty'  => (string) Counterparty property. Required.
+     *    ]
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function updatePrivatePerson(array $counterparty): array
+    {
+        $counterparty['CounterpartyType'] = 'PrivatePerson';
+        $result = $this->connection->post(self::MODEL_NAME, 'update', $counterparty);
+        return array_shift($result);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a28f4b04-8512-11ec-8ced-005056b2dbe1/method/a2eb27e8-8512-11ec-8ced-005056b2dbe1
+     * @param string $ref
+     * @return void
+     * @throws NovaPoshtaApiException
+     */
+    public function delete(string $ref): void
+    {
+        $this->connection->post(self::MODEL_NAME, 'delete', ['Ref' => $ref]);
     }
 
     /**

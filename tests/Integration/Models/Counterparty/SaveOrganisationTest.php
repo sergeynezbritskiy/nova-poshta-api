@@ -33,6 +33,8 @@ class SaveOrganisationTest extends TestCase
         ];
         $actualResult = $this->model->saveOrganisation($counterparty);
         $this->assertIsCounterparty($actualResult);
+
+        $this->model->delete($actualResult['Ref']);
     }
 
     /**
