@@ -30,14 +30,30 @@ class Counterparty implements ModelInterface
      *      'LastName'              => (string) Last name. Required.
      *      'Phone'                 => (string) Phone number. Required.
      *      'Email'                 => (string) Email. Required.
-     *      'CounterpartyType'      => (string) Counterparty type. Required.
      *      'CounterpartyProperty'  => (string) Counterparty property. Required.
      *    ]
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function save(array $counterparty): array
+    public function savePrivatePerson(array $counterparty): array
     {
+        $counterparty['CounterpartyType'] = 'PrivatePerson';
+        $result = $this->connection->post(self::MODEL_NAME, 'save', $counterparty);
+        return array_shift($result);
+    }
+
+    /**
+     * @param array $counterparty Array containing the necessary params.
+     *    $counterparty = [
+     *      'EDRPOU'                 => (string) EDRPOU. Required.
+     *      'CounterpartyProperty'  => (string) Counterparty property. Optional.
+     *    ]
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function saveOrganisation(array $counterparty): array
+    {
+        $counterparty['CounterpartyType'] = 'Organization';
         $result = $this->connection->post(self::MODEL_NAME, 'save', $counterparty);
         return array_shift($result);
     }

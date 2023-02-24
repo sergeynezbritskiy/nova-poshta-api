@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\NovaPoshta\Models\Counterparty;
 use SergeyNezbritskiy\NovaPoshta\Tests\UsesConnectionTrait;
 
-class SaveTest extends TestCase
+class SavePrivatePersonTest extends TestCase
 {
     use UsesConnectionTrait;
 
@@ -21,12 +21,11 @@ class SaveTest extends TestCase
         $this->model = new Counterparty($connection);
     }
 
-
     /**
      * @return void
      * @throws Exception
      */
-    public function testCounterpartyCrud(): void
+    public function testCounterpartyPrivatePersonCrud(): void
     {
         $sfx = $this->randomString(5);
         $counterparty = [
@@ -35,10 +34,9 @@ class SaveTest extends TestCase
             'LastName' => 'Іванов' . $sfx,
             'Phone' => rand(380000000000, 380000999999),
             'Email' => 'ivan.ivanov@nova-poshta.test',
-            'CounterpartyType' => 'PrivatePerson',
             'CounterpartyProperty' => 'Recipient',
         ];
-        $actualResult = $this->model->save($counterparty);
+        $actualResult = $this->model->savePrivatePerson($counterparty);
         $this->assertIsCounterparty($actualResult);
     }
 
