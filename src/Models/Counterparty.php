@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpUnused */
+
 declare(strict_types=1);
 
 namespace SergeyNezbritskiy\NovaPoshta\Models;
@@ -128,16 +130,18 @@ class Counterparty implements ModelInterface
     /**
      * @see https://developers.novaposhta.ua/view/model/a28f4b04-8512-11ec-8ced-005056b2dbe1/method/a37a06df-8512-11ec-8ced-005056b2dbe1
      * @param string $counterpartyProperty
+     * @param string|null $search
      * @param int $page
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function getCounterparties(string $counterpartyProperty, int $page = 1): array
+    public function getCounterparties(string $counterpartyProperty, string $search = null, int $page = 1): array
     {
-        $params = [
+        $params = array_filter([
             'CounterpartyProperty' => $counterpartyProperty,
+            'FindByString' => $search,
             'Page' => $page
-        ];
+        ]);
         return $this->connection->post(self::MODEL_NAME, 'getCounterparties', $params);
     }
 
