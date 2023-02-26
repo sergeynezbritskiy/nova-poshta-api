@@ -13,7 +13,6 @@ class GetCounterpartiesTest extends TestCase
 {
     use UsesConnectionTrait;
 
-
     /**
      * Counterparty Ref
      */

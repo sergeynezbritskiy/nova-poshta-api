@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SergeyNezbritskiy\Tests\Integration\Models\Counterparty;
+namespace SergeyNezbritskiy\Tests\Integration\Models\ContactPerson;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
