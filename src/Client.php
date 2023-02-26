@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\NovaPoshta;
 
+use Exception;
 use GuzzleHttp\Client as HttpClient;
-use PHPUnit\Logging\Exception;
 use SergeyNezbritskiy\NovaPoshta\Models\Address;
+use SergeyNezbritskiy\NovaPoshta\Models\ContactPerson;
+use SergeyNezbritskiy\NovaPoshta\Models\Counterparty;
 
 /**
  * Class Client
@@ -14,12 +16,16 @@ use SergeyNezbritskiy\NovaPoshta\Models\Address;
  * Class-connector with NovaPoshta API
  *
  * @property Address $address
+ * @property Counterparty $counterparty
+ * @property ContactPerson $contactPerson
  * @see      https://developers.novaposhta.ua/documentation
  */
 class Client
 {
     private const MODELS_MAP = [
-        'address' => Address::class
+        'address' => Address::class,
+        'counterparty' => Counterparty::class,
+        'contactPerson' => ContactPerson::class,
     ];
 
     private string $apiKey;
@@ -33,6 +39,9 @@ class Client
         $this->apiKey = $apiKey;
     }
 
+    /**
+     * @throws Exception
+     */
     public function __get(string $property): ModelInterface
     {
         if (!array_key_exists($property, self::MODELS_MAP)) {

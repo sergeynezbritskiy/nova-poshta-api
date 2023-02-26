@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SergeyNezbritskiy\Tests\Integration\Models\Counterparty;
+namespace SergeyNezbritskiy\Tests\Integration\Models\ContactPerson;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
+use SergeyNezbritskiy\NovaPoshta\Models\ContactPerson;
 use SergeyNezbritskiy\NovaPoshta\Models\Counterparty;
 use SergeyNezbritskiy\NovaPoshta\Tests\UsesConnectionTrait;
 
@@ -19,11 +20,13 @@ class SavePrivatePersonTest extends TestCase
     private const CITY_REF = 'db5c88e0-391c-11dd-90d9-001a92567626';
 
     private Counterparty $model;
+    private ContactPerson $contactPersonModel;
 
     protected function setUp(): void
     {
         $connection = $this->getConnection();
         $this->model = new Counterparty($connection);
+        $this->contactPersonModel = new ContactPerson($connection);
     }
 
     /**
@@ -60,9 +63,12 @@ class SavePrivatePersonTest extends TestCase
 
         //get counterparty contact persons
         $contactPersons = $this->model->getCounterpartyContactPersons($counterparty['Ref']);
-        $this->assertIsContactPerson(array_shift($contactPersons));
+        $this->assertIsContactPerson($contactPersons[0]);
 
         //delete counterparty
+        foreach ($contactPersons as $contactPerson) {
+            $this->contactPersonModel->delete($contactPerson['Ref']);
+        }
         $this->expectExceptionMessage('Counterparty PrivatePerson can\'t be deleted');
         $this->model->delete($counterparty['Ref']);
     }
