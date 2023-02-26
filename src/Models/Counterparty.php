@@ -10,6 +10,12 @@ use SergeyNezbritskiy\NovaPoshta\Connection;
 use SergeyNezbritskiy\NovaPoshta\ModelInterface;
 use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 
+/**
+ * Class Counterparty
+ * This class is for managing your counterparties
+ *
+ * @see https://new.novaposhta.ua/dashboard/contacts
+ */
 class Counterparty implements ModelInterface
 {
     public const COUNTERPARTY_PROPERTY_SENDER = 'Sender';
