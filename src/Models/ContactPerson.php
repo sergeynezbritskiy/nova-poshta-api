@@ -78,7 +78,9 @@ class ContactPerson implements ModelInterface
             $this->connection->post(self::MODEL_NAME, 'delete', ['Ref' => $ref]);
         } catch (NovaPoshtaApiException $e) {
             if ($e->getCode() !== self::CONTACT_PERSON_NOT_FOUND_CODE) {
+                // @codeCoverageIgnoreStart
                 throw $e;
+                // @codeCoverageIgnoreEnd
             }
         }
     }
