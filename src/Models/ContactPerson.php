@@ -11,6 +11,7 @@ use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 class ContactPerson implements ModelInterface
 {
     private const MODEL_NAME = 'ContactPerson';
+    private const CONTACT_PERSON_NOT_FOUND_CODE = 20000400480;
 
     private Connection $connection;
 
@@ -73,6 +74,12 @@ class ContactPerson implements ModelInterface
      */
     public function delete(string $ref): void
     {
-        $this->connection->post(self::MODEL_NAME, 'delete', ['Ref' => $ref]);
+        try {
+            $this->connection->post(self::MODEL_NAME, 'delete', ['Ref' => $ref]);
+        } catch (NovaPoshtaApiException $e) {
+            if ($e->getCode() !== self::CONTACT_PERSON_NOT_FOUND_CODE) {
+                throw $e;
+            }
+        }
     }
 }

@@ -61,8 +61,9 @@ class Connection
             $body = $this->getResponseBody($response);
 
             if ($body['success'] === false) {
-                $error = array_shift($body['errors']) ?: array_shift($body['warnings']);
-                throw new NovaPoshtaApiException(sprintf(self::ERROR_MSG_TEMPLATE, $error));
+                $error = $body['errors'][0] ?? $body['warnings'][0] ?? 'Unknown error';
+                $errorCode = $body['errorCodes'][0] ?? $body['warningCodes'][0] ?? 0;
+                throw new NovaPoshtaApiException(sprintf(self::ERROR_MSG_TEMPLATE, $error), (int)$errorCode);
             }
             return $body['data'];
         } catch (GuzzleException $e) {

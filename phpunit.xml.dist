@@ -19,6 +19,8 @@
 
     <php>
         <env name="API_KEY" value=""/>
+        <!-- remove all contact persons before testing contact person crud -->
+        <env name="CLEAR_CONTACT_PERSONS" value="false"/>
     </php>
 
 </phpunit>

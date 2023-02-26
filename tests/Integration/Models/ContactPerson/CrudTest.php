@@ -48,6 +48,9 @@ class CrudTest extends TestCase
             'Phone' => rand(380000000000, 380000999999),
             'CounterpartyProperty' => 'Recipient',
         ]);
+        if (filter_var(getenv('CLEAR_CONTACT_PERSONS'), FILTER_VALIDATE_BOOL)) {
+            $this->clearContactPersons($counterparty);
+        }
 
         //create counterparty
         $contactPersonData = [
@@ -61,46 +64,34 @@ class CrudTest extends TestCase
         $this->assertContactPerson($counterparty, $contactPerson, ['Email', 'MiddleName']);
 
 
-        //update counterparty
+        //update contact person
         $contactPersonData['Ref'] = $contactPerson['Ref'];
         $contactPersonData['MiddleName'] = 'Сидорович' . $sfx;
         $contactPersonUpdated = $this->model->update($counterparty['Ref'], $contactPersonData);
         $this->assertContactPerson($counterparty, $contactPersonUpdated, ['Ref', 'MiddleName', 'Email']);
 
-        //delete counterparty
+        //delete contact person
         $this->model->delete($contactPerson['Ref']);
         $this->assertContactPersonMissing($counterparty['Ref']);
-    }
 
-    /**
-     * @throws Exception
-     */
-    private function randomString($length = 10): string
-    {
-        $characters = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ';
-        $charactersLength = mb_strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $symbolPosition = random_int(0, $charactersLength - 1);
-            $randomString .= mb_substr($characters, $symbolPosition, 1);
-        }
-        return $randomString;
+        //delete counterparty contact person
+        $this->model->delete($contactPerson['Ref']);
     }
 
     /**
      * @param array $counterparty
      * @param array $expectedResult
-     * @param array $searchAttributes
+     * @param array $compareAttributes
      * @return void
      * @throws NovaPoshtaApiException
      */
-    private function assertContactPerson(array $counterparty, array $expectedResult, array $searchAttributes): void
+    private function assertContactPerson(array $counterparty, array $expectedResult, array $compareAttributes): void
     {
         $page = 1;
         do {
             $contactPersons = $this->counterpartyModel->getCounterpartyContactPersons($counterparty['Ref'], $page++);
             foreach ($contactPersons as $contactPerson) {
-                if ($this->ensureContactPerson($contactPerson, $expectedResult, $searchAttributes)) {
+                if ($this->ensureContactPerson($contactPerson, $expectedResult, $compareAttributes)) {
                     $this->assertTrue(true, 'Imitate that we did an assertion');
                     return;
                 }
@@ -142,5 +133,37 @@ class CrudTest extends TestCase
             }
         }
         return true;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function randomString($length = 10): string
+    {
+        $characters = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ';
+        $charactersLength = mb_strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $symbolPosition = random_int(0, $charactersLength - 1);
+            $randomString .= mb_substr($characters, $symbolPosition, 1);
+        }
+        return $randomString;
+    }
+
+    /**
+     * @param array $counterparty
+     * @return void
+     * @throws NovaPoshtaApiException
+     */
+    private function clearContactPersons(array $counterparty): void
+    {
+        do {
+            $result = $this->counterpartyModel->getCounterpartyContactPersons($counterparty['Ref']);
+            foreach ($result as $contactPerson) {
+                $this->model->delete($contactPerson['Ref']);
+                $template = 'Contact person %s %s has been deleted' . PHP_EOL;
+                echo sprintf($template, $contactPerson['FirstName'], $contactPerson['LastName']);
+            }
+        } while (count($result) > 0);
     }
 }
