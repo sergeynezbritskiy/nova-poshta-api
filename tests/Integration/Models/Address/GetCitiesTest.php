@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SergeyNezbritskiy\Tests\Integration\Models\Address;
+namespace SergeyNezbritskiy\NovaPoshta\Tests\Integration\Models\Address;
 
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\NovaPoshta\Models\Address;

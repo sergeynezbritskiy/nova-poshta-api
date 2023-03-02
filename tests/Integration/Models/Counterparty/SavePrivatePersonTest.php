@@ -2,22 +2,18 @@
 
 declare(strict_types=1);
 
-namespace SergeyNezbritskiy\Tests\Integration\Models\ContactPerson;
+namespace SergeyNezbritskiy\NovaPoshta\Tests\Integration\Models\Counterparty;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\NovaPoshta\Models\ContactPerson;
 use SergeyNezbritskiy\NovaPoshta\Models\Counterparty;
+use SergeyNezbritskiy\NovaPoshta\Tests\ConstantsInterface;
 use SergeyNezbritskiy\NovaPoshta\Tests\UsesConnectionTrait;
 
-class SavePrivatePersonTest extends TestCase
+class SavePrivatePersonTest extends TestCase implements ConstantsInterface
 {
     use UsesConnectionTrait;
-
-    /**
-     * Kharkiv city ref
-     */
-    private const CITY_REF = 'db5c88e0-391c-11dd-90d9-001a92567626';
 
     private Counterparty $model;
     private ContactPerson $contactPersonModel;

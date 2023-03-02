@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SergeyNezbritskiy\Tests\Unit\Models\Address;
+namespace SergeyNezbritskiy\NovaPoshta\Tests\Unit\Models\Address;
 
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;

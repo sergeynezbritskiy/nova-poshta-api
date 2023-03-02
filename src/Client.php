@@ -7,6 +7,7 @@ namespace SergeyNezbritskiy\NovaPoshta;
 use Exception;
 use GuzzleHttp\Client as HttpClient;
 use SergeyNezbritskiy\NovaPoshta\Models\Address;
+use SergeyNezbritskiy\NovaPoshta\Models\Common;
 use SergeyNezbritskiy\NovaPoshta\Models\ContactPerson;
 use SergeyNezbritskiy\NovaPoshta\Models\Counterparty;
 
@@ -26,6 +27,7 @@ class Client
         'address' => Address::class,
         'counterparty' => Counterparty::class,
         'contactPerson' => ContactPerson::class,
+        'common' => Common::class,
     ];
 
     private string $apiKey;

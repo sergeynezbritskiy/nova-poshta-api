@@ -11,16 +11,9 @@ use SergeyNezbritskiy\NovaPoshta\Models\Counterparty;
 use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 use SergeyNezbritskiy\NovaPoshta\Tests\UsesConnectionTrait;
 
-use function count;
-
 class DeleteContactPersonTest extends TestCase
 {
     use UsesConnectionTrait;
-
-    /**
-     * Counterparty Ref
-     */
-    private const COUNTERPARTY_REF = '98d078a0-e096-11e6-8ba8-005056881c6b';
 
     private ContactPerson $model;
     private Counterparty $counterpartyModel;
