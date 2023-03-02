@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SergeyNezbritskiy\Tests\Integration\Models\ContactPerson;
+namespace SergeyNezbritskiy\NovaPoshta\Tests\Integration\Models\ContactPerson;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
@@ -16,11 +16,6 @@ use function count;
 class CrudTest extends TestCase
 {
     use UsesConnectionTrait;
-
-    /**
-     * Counterparty Ref
-     */
-    private const COUNTERPARTY_REF = '98d078a0-e096-11e6-8ba8-005056881c6b';
 
     private ContactPerson $model;
     private Counterparty $counterpartyModel;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SergeyNezbritskiy\Tests\Integration\Models\Counterparty;
+namespace SergeyNezbritskiy\NovaPoshta\Tests\Integration\Models\Counterparty;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
@@ -12,11 +12,6 @@ use SergeyNezbritskiy\NovaPoshta\Tests\UsesConnectionTrait;
 class GetCounterpartiesTest extends TestCase
 {
     use UsesConnectionTrait;
-
-    /**
-     * Counterparty Ref
-     */
-    private const COUNTERPARTY_REF = '98d078a0-e096-11e6-8ba8-005056881c6b';
 
     private Counterparty $model;
 

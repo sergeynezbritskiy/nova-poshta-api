@@ -2,27 +2,18 @@
 
 declare(strict_types=1);
 
-namespace SergeyNezbritskiy\Tests\Integration\Models\Address;
+namespace SergeyNezbritskiy\NovaPoshta\Tests\Integration\Models\Address;
 
 use PHPUnit\Framework\TestCase;
 use SergeyNezbritskiy\NovaPoshta\Models\Address;
 use SergeyNezbritskiy\NovaPoshta\Models\Counterparty;
 use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
+use SergeyNezbritskiy\NovaPoshta\Tests\ConstantsInterface;
 use SergeyNezbritskiy\NovaPoshta\Tests\UsesConnectionTrait;
 
-class AddressCrudTest extends TestCase
+class AddressCrudTest extends TestCase implements ConstantsInterface
 {
     use UsesConnectionTrait;
-
-    /**
-     * Counterparty Ref
-     */
-    private const COUNTERPARTY_REF = '98d078a0-e096-11e6-8ba8-005056881c6b';
-
-    /**
-     * Вулиця Тимурiвцiв
-     */
-    private const STREET_REF = 'a7503d2c-8c06-11de-9467-001ec9d9f7b7';
 
     private Address $model;
     private Counterparty $counterpartyModel;
