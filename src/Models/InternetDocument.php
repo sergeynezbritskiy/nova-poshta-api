@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\NovaPoshta\Models;
 
+use DateTime;
 use SergeyNezbritskiy\NovaPoshta\Connection;
 use SergeyNezbritskiy\NovaPoshta\ModelInterface;
 use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
@@ -76,5 +77,20 @@ class InternetDocument implements ModelInterface
     {
         $result = $this->connection->post(self::MODEL_NAME, 'getDocumentPrice', $params);
         return array_shift($result);
+    }
+
+    /**
+     * @throws NovaPoshtaApiException
+     */
+    public function getDocumentDeliveryDate(DateTime $date, string $serviceType, string $citySrc, string $cityDst): array
+    {
+        $params = [
+            'DateTime' => $date->format('d.m.Y'),
+            'ServiceType' => $serviceType,
+            'CitySender' => $citySrc,
+            'CityRecipient' => $cityDst
+        ];
+        $result = $this->connection->post(self::MODEL_NAME, 'getDocumentDeliveryDate', $params);
+        return array_shift($result)['DeliveryDate'];
     }
 }
