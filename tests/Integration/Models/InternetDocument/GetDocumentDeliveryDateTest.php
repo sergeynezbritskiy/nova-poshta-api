@@ -12,7 +12,7 @@ use SergeyNezbritskiy\NovaPoshta\Tests\AssertEntityByPropertiesTrait;
 use SergeyNezbritskiy\NovaPoshta\Tests\ConstantsInterface;
 use SergeyNezbritskiy\NovaPoshta\Tests\UsesConnectionTrait;
 
-class GetDeliveryDateTest extends TestCase implements ConstantsInterface
+class GetDocumentDeliveryDateTest extends TestCase implements ConstantsInterface
 {
     use AssertEntityByPropertiesTrait;
     use UsesConnectionTrait;
@@ -30,11 +30,12 @@ class GetDeliveryDateTest extends TestCase implements ConstantsInterface
      */
     public function testGetDeliveryDateTest(): void
     {
-        $date = new DateTime();
-        $serviceType = 'WarehouseWarehouse';
-        $citySrc = self::CITY_REF_KYIV;
-        $cityDst = self::CITY_REF_KHARKIV;
-        $actualResult = $this->model->getDocumentDeliveryDate($date, $serviceType, $citySrc, $cityDst);
+        $actualResult = $this->model->getDocumentDeliveryDate([
+            'DateTime' => (new DateTime())->format('d.m.Y'),
+            'ServiceType' => 'WarehouseWarehouse',
+            'CitySender' => self::CITY_REF_KHARKIV,
+            'CityRecipient' => self::CITY_REF_KYIV,
+        ]);
         $this->assertEntity($actualResult, ['date', 'timezone', 'timezone_type']);
     }
 }

@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\NovaPoshta\Models;
 
-use DateTime;
 use SergeyNezbritskiy\NovaPoshta\Connection;
 use SergeyNezbritskiy\NovaPoshta\ModelInterface;
 use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
@@ -80,16 +79,20 @@ class InternetDocument implements ModelInterface
     }
 
     /**
+     * @see https://developers.novaposhta.ua/view/model/a90d323c-8512-11ec-8ced-005056b2dbe1/method/a941c714-8512-11ec-8ced-005056b2dbe1
+     * @see \SergeyNezbritskiy\NovaPoshta\Tests\Integration\Models\InternetDocument\GetDocumentDeliveryDateTest
+     * @param array $params
+     *         $params = [
+     *              'DateTime'      => (string), Document creation date, format `d.m.Y`. Optional.
+     *              'ServiceType'   => (string), Required.
+     *              'CitySender'    => (string), city ref. Required.
+     *              'CityRecipient' => (string), city ref. Required.
+     *          ];
+     * @return array
      * @throws NovaPoshtaApiException
      */
-    public function getDocumentDeliveryDate(DateTime $date, string $serviceType, string $citySrc, string $cityDst): array
+    public function getDocumentDeliveryDate(array $params): array
     {
-        $params = [
-            'DateTime' => $date->format('d.m.Y'),
-            'ServiceType' => $serviceType,
-            'CitySender' => $citySrc,
-            'CityRecipient' => $cityDst
-        ];
         $result = $this->connection->post(self::MODEL_NAME, 'getDocumentDeliveryDate', $params);
         return array_shift($result)['DeliveryDate'];
     }
