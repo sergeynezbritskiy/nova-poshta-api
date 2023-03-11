@@ -10,6 +10,7 @@ use SergeyNezbritskiy\NovaPoshta\Models\Address;
 use SergeyNezbritskiy\NovaPoshta\Models\Common;
 use SergeyNezbritskiy\NovaPoshta\Models\ContactPerson;
 use SergeyNezbritskiy\NovaPoshta\Models\Counterparty;
+use SergeyNezbritskiy\NovaPoshta\Models\InternetDocument;
 
 /**
  * Class Client
@@ -19,6 +20,8 @@ use SergeyNezbritskiy\NovaPoshta\Models\Counterparty;
  * @property Address $address
  * @property Counterparty $counterparty
  * @property ContactPerson $contactPerson
+ * @property ContactPerson $common
+ * @property ContactPerson $internetDocument
  * @see      https://developers.novaposhta.ua/documentation
  */
 class Client
@@ -28,6 +31,7 @@ class Client
         'counterparty' => Counterparty::class,
         'contactPerson' => ContactPerson::class,
         'common' => Common::class,
+        'internetDocument' => InternetDocument::class,
     ];
 
     private string $apiKey;

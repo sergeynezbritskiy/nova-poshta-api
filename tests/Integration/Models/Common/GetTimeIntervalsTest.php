@@ -30,7 +30,7 @@ class GetTimeIntervalsTest extends TestCase implements ConstantsInterface
      */
     public function testGetTimeIntervals(): void
     {
-        $actualResult = $this->model->getTimeIntervals(self::CITY_REF);
+        $actualResult = $this->model->getTimeIntervals(self::CITY_REF_KHARKIV);
         $this->assertNotEmpty($actualResult);
         $entity = array_shift($actualResult);
         $expectedKeys = [
