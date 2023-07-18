@@ -96,4 +96,42 @@ class InternetDocument implements ModelInterface
         $result = $this->connection->post(self::MODEL_NAME, 'getDocumentDeliveryDate', $params);
         return array_shift($result)['DeliveryDate'];
     }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a90d323c-8512-11ec-8ced-005056b2dbe1/method/a9d22b34-8512-11ec-8ced-005056b2dbe1
+     * @param array $params
+     * @param int|null $page
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function getDocumentList(array $params, int $page = null): array
+    {
+        if ($page !== null) {
+            $params['Page'] = $page;
+        }
+        return $this->connection->post(self::MODEL_NAME, 'getDocumentList', $params);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a90d323c-8512-11ec-8ced-005056b2dbe1/method/a965630e-8512-11ec-8ced-005056b2dbe1
+     * @param array $params
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function save(array $params): array
+    {
+        $result = $this->connection->post(self::MODEL_NAME, 'save', $params);
+        return array_shift($result);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a90d323c-8512-11ec-8ced-005056b2dbe1/method/a965630e-8512-11ec-8ced-005056b2dbe1
+     * @param string $documentRef
+     * @return void
+     * @throws NovaPoshtaApiException
+     */
+    public function delete(string $documentRef): void
+    {
+        $this->connection->post(self::MODEL_NAME, 'delete', ['DocumentRefs' => $documentRef]);
+    }
 }

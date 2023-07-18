@@ -27,7 +27,7 @@ class GetSettlementsTest extends TestCase
      */
     public function testGetSettlements(): void
     {
-        $actualResult = $this->model->getSettlements([], true, 1, 10);
+        $actualResult = $this->model->getSettlements(['FindByString' => 'Київ'], true, 1, 10);
         $this->assertNotEmpty($actualResult);
         $this->assertIsSettlement(array_shift($actualResult));
     }
