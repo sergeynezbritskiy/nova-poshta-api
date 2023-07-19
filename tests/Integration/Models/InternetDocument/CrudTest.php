@@ -83,11 +83,47 @@ class CrudTest extends TestCase implements ConstantsInterface
 
         $actualResult = $this->model->save($params);
         $this->assertNotEmpty($actualResult['Ref']);
-        sleep(15);
 
         //delete document
-        $this->model->delete($actualResult['Ref']);
+        $this->deleteDocument($actualResult['Ref']);
 
+        $this->assertDocumentDeleted($actualResult['Ref']);
+    }
+
+    /**
+     * @param string $ref
+     * @param int $attempt
+     * @return void
+     * @throws NovaPoshtaApiException
+     * @SuppressWarnings(PHPMD.ElseExpression)
+     */
+    private function deleteDocument(string $ref, int $attempt = 1): void
+    {
+        sleep(5 * $attempt);
+        try {
+            $this->model->delete($ref);
+        } catch (NovaPoshtaApiException $e) {
+            $docNotCreatedYet = str_contains($e->getMessage(), 'No document changed DeletionMark');
+            if (!$docNotCreatedYet) {
+                throw $e;
+            }
+            $attemptsNotExceeded = $attempt <= 3;
+            if ($attemptsNotExceeded) {
+                printf(PHP_EOL . 'Attempt %d to delete document failed.' . PHP_EOL, $attempt);
+                $this->deleteDocument($ref, ++$attempt);
+            } else {
+                throw $e;
+            }
+        }
+    }
+
+    /**
+     * @param string $ref
+     * @return void
+     * @throws NovaPoshtaApiException
+     */
+    private function assertDocumentDeleted(string $ref): void
+    {
         $documents = $this->model->getDocumentList([
             'DateTimeFrom' => date('d.m.Y', strtotime('-2 days')),
             'DateTimeTo' => date('d.m.Y', strtotime('+2 days')),
@@ -95,9 +131,10 @@ class CrudTest extends TestCase implements ConstantsInterface
             'DateTime' => date('d.m.Y'),
         ], 1);
         foreach ($documents as $document) {
-            if ($document['Ref'] === $actualResult['Ref']) {
+            if ($document['Ref'] === $ref) {
                 $this->fail('Failed to delete document.');
             }
         }
+        $this->assertTrue(true, 'Just to suppress error that method doesn\'t do any assertions');
     }
 }

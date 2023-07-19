@@ -19,6 +19,7 @@
     },
     "require-dev": {
         "phpmd/phpmd": "^2.13",
+        "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^10.0",
         "squizlabs/php_codesniffer": "^3.7"
     },
@@ -30,6 +31,7 @@
         "phpcs": "vendor/bin/phpcs -sp --standard=PSR12 src tests",
         "fix": "vendor/bin/phpcbf -sp --standard=PSR12 src tests",
         "phpmd": "vendor/bin/phpmd src,tests text phpmd.xml",
+        "phpstan": "vendor/bin/phpstan analyse src tests --level=6",
         "tests": "XDEBUG_MODE=coverage vendor/bin/phpunit --stop-on-failure --stop-on-error --coverage-html=var/reports/coverage --coverage-clover=var/reports/coverage.xml",
         "tests-debug": "XDEBUG_MODE=coverage vendor/bin/phpunit  --coverage-html=var/reports/coverage --coverage-clover=var/reports/coverage.xml",
         "all": [

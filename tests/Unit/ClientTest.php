@@ -34,6 +34,7 @@ class ClientTest extends TestCase
         $property = 'someNotSupportedModel';
         $this->expectExceptionMessage('Model `someNotSupportedModel` not supported by Nova Poshta API Client');
         $this->expectException(Exception::class);
+        /** @phpstan-ignore-next-line */
         $this->object->$property;
     }
 }
