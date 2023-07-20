@@ -19,7 +19,20 @@ class InternetDocument implements ModelInterface
     public const CARGO_TYPE_TIRES_WHEELS = 'TiresWheels';
     public const CARGO_TYPE_PALLET = 'Pallet';
 
+    public const SERVICE_TYPE_DOORS_DOORS = 'DoorsDoors';
+    public const SERVICE_TYPE_DOORS_WAREHOUSE = 'DoorsWarehouse';
+    public const SERVICE_TYPE_WAREHOUSE_DOORS = 'WarehouseDoors';
+    public const SERVICE_TYPE_WAREHOUSE_WAREHOUSE = 'WarehouseWarehouse';
+
+    public const PAYER_TYPE_SENDER = 'Sender';
+    public const PAYER_TYPE_RECIPIENT = 'Recipient';
+    public const PAYER_TYPE_THIRD_PERSON = 'ThirdPerson';
+
+    public const PAYMENT_TYPE_CASH = 'Cash';
+    public const PAYMENT_TYPE_NON_CASH = 'NonCash';
+
     private const MODEL_NAME = 'InternetDocument';
+
     private Connection $connection;
 
     /**
@@ -121,6 +134,18 @@ class InternetDocument implements ModelInterface
     public function save(array $params): array
     {
         $result = $this->connection->post(self::MODEL_NAME, 'save', $params);
+        return array_shift($result);
+    }
+
+    /**
+     * @see https://developers.novaposhta.ua/view/model/a90d323c-8512-11ec-8ced-005056b2dbe1/method/a98a4354-8512-11ec-8ced-005056b2dbe1
+     * @param array $params
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    public function update(array $params): array
+    {
+        $result = $this->connection->post(self::MODEL_NAME, 'update', $params);
         return array_shift($result);
     }
 

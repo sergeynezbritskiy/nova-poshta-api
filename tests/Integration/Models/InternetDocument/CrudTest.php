@@ -26,11 +26,21 @@ class CrudTest extends TestCase implements ConstantsInterface
     }
 
     /**
+     * @return void
+     * @throws NovaPoshtaApiException
+     */
+    protected function tearDown(): void
+    {
+        foreach ($this->getAllDocuments() as $document) {
+            $this->deleteDocument($document['Ref']);
+        }
+    }
+
+    /**
      * @throws NovaPoshtaApiException
      */
     public function testCrudDocument(): void
     {
-
 //        $counterpartyModel = new \SergeyNezbritskiy\NovaPoshta\Models\Counterparty($this->getConnection());
 //        $addressModel = new \SergeyNezbritskiy\NovaPoshta\Models\Address($this->getConnection());
 
@@ -75,17 +85,33 @@ class CrudTest extends TestCase implements ConstantsInterface
             'CargoType' => InternetDocument::CARGO_TYPE_CARGO,
             'Weight' => '0.5',
             'SeatsAmount' => '1',
-            'ServiceType' => 'DoorsDoors',
-            'PayerType' => 'Recipient',
-            'PaymentMethod' => 'Cash',
-            'Description' => 'TEST, DO NOT PROCEED WITH THIS'
+            'ServiceType' => InternetDocument::SERVICE_TYPE_DOORS_DOORS,
+            'PayerType' => InternetDocument::PAYER_TYPE_RECIPIENT,
+            'PaymentMethod' => InternetDocument::PAYMENT_TYPE_CASH,
+            'Description' => 'Це тестове замовлення, не треба його обробляти'
         ];
 
         $actualResult = $this->model->save($params);
         $this->assertNotEmpty($actualResult['Ref']);
 
+        $params['PayerType'] = InternetDocument::PAYER_TYPE_SENDER;
+        $params['Ref'] = $actualResult['Ref'];
+
+        $this->gulp();
+
+        $actualResult = $this->model->update($params);
+
+        $this->gulp();
+
+        $document = $this->getDocumentByRef($actualResult['Ref']);
+        $this->assertSame($params['PayerType'], $document['PayerType']);
+
+        $this->gulp();
+
         //delete document
         $this->deleteDocument($actualResult['Ref']);
+
+        $this->gulp();
 
         $this->assertDocumentDeleted($actualResult['Ref']);
     }
@@ -99,7 +125,6 @@ class CrudTest extends TestCase implements ConstantsInterface
      */
     private function deleteDocument(string $ref, int $attempt = 1): void
     {
-        sleep(5 * $attempt);
         try {
             $this->model->delete($ref);
         } catch (NovaPoshtaApiException $e) {
@@ -110,6 +135,7 @@ class CrudTest extends TestCase implements ConstantsInterface
             $attemptsNotExceeded = $attempt <= 3;
             if ($attemptsNotExceeded) {
                 printf(PHP_EOL . 'Attempt %d to delete document failed.' . PHP_EOL, $attempt);
+                sleep(5 * $attempt);
                 $this->deleteDocument($ref, ++$attempt);
             } else {
                 throw $e;
@@ -124,17 +150,51 @@ class CrudTest extends TestCase implements ConstantsInterface
      */
     private function assertDocumentDeleted(string $ref): void
     {
-        $documents = $this->model->getDocumentList([
+        if ($this->getDocumentByRef($ref)) {
+            $this->fail('Failed to delete document.');
+        }
+        $this->assertTrue(true, 'Just to suppress error that method doesn\'t do any assertions');
+    }
+
+    /**
+     * @param string $ref
+     * @return array|null
+     * @throws NovaPoshtaApiException
+     */
+    public function getDocumentByRef(string $ref): ?array
+    {
+        $documents = $this->getAllDocuments();
+        foreach ($documents as $document) {
+            if ($document['Ref'] === $ref) {
+                return $document;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @return array
+     * @throws NovaPoshtaApiException
+     */
+    private function getAllDocuments(): array
+    {
+        return $this->model->getDocumentList([
             'DateTimeFrom' => date('d.m.Y', strtotime('-2 days')),
             'DateTimeTo' => date('d.m.Y', strtotime('+2 days')),
             'GetFullList' => 1,
             'DateTime' => date('d.m.Y'),
         ], 1);
-        foreach ($documents as $document) {
-            if ($document['Ref'] === $ref) {
-                $this->fail('Failed to delete document.');
-            }
+    }
+
+    /**
+     * @return void
+     */
+    private function gulp(): void
+    {
+        $useGulp = getenv('USE_GULP');
+
+        if ($useGulp) {
+            sleep(5);
         }
-        $this->assertTrue(true, 'Just to suppress error that method doesn\'t do any assertions');
     }
 }

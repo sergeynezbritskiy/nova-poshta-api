@@ -14,6 +14,7 @@
     <coverage/>
     <php>
         <env name="API_KEY" value=""/>
+        <env name="USE_GULP" value="true"/>
         <!-- remove all contact persons before testing contact person crud -->
         <env name="CLEAR_CONTACT_PERSONS" value="false"/>
     </php>
