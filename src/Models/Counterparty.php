@@ -152,6 +152,7 @@ class Counterparty implements ModelInterface
     }
 
     /**
+     * @see https://developers.novaposhta.ua/view/model/a28f4b04-8512-11ec-8ced-005056b2dbe1/method/a30dbb7c-8512-11ec-8ced-005056b2dbe1
      * @param string $counterpartyRef
      * @param string $counterpartyProperty
      * @return array

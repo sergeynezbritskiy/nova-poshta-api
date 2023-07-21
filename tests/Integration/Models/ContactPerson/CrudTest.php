@@ -133,7 +133,7 @@ class CrudTest extends TestCase
     /**
      * @throws Exception
      */
-    private function randomString($length = 10): string
+    private function randomString(int $length = 10): string
     {
         $characters = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ';
         $charactersLength = mb_strlen($characters);

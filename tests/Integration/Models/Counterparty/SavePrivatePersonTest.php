@@ -48,7 +48,7 @@ class SavePrivatePersonTest extends TestCase implements ConstantsInterface
         //update counterparty
         $counterparty['Ref'] = $actualResult['Ref'];
         $counterparty['MiddleName'] = 'Петрович' . $sfx;
-        $counterparty['CityRef'] = self::CITY_REF;
+        $counterparty['CityRef'] = self::CITY_REF_KHARKIV;
 
         $actualResult = $this->model->updatePrivatePerson($counterparty);
         $this->assertSame($counterparty['MiddleName'], $actualResult['MiddleName']);
@@ -114,7 +114,7 @@ class SavePrivatePersonTest extends TestCase implements ConstantsInterface
     /**
      * @throws Exception
      */
-    private function randomString($length = 10): string
+    private function randomString(int $length = 10): string
     {
         $characters = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ';
         $charactersLength = mb_strlen($characters);

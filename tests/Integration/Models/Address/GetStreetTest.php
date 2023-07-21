@@ -28,7 +28,7 @@ class GetStreetTest extends TestCase implements ConstantsInterface
      */
     public function testGetStreet(): void
     {
-        $actualResult = $this->model->getStreet(self::CITY_REF, 'Черниш', 1, 10);
+        $actualResult = $this->model->getStreet(self::CITY_REF_KHARKIV, 'Черниш', 1, 10);
         $this->assertIsArray($actualResult);
         $this->assertIsStreet(array_shift($actualResult));
     }

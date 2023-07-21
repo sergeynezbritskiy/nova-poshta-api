@@ -30,6 +30,9 @@ jobs:
       - name: Run mess detector
         run: composer run phpmd
 
+      - name: Run phpstan
+        run: composer run phpstan
+
   tests:
     name: Unit and Integration Tests
 

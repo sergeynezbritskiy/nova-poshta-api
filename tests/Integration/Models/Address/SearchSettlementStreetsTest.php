@@ -28,7 +28,7 @@ class SearchSettlementStreetsTest extends TestCase implements ConstantsInterface
      */
     public function testSearchSettlementStreets(): void
     {
-        $actualResult = $this->model->searchSettlementStreets('Чернишевського', self::CITY_REF);
+        $actualResult = $this->model->searchSettlementStreets('Чернишевського', self::CITY_REF_KHARKIV);
         $this->assertArrayHasKey('TotalCount', $actualResult);
         $this->assertArrayHasKey('Addresses', $actualResult);
     }

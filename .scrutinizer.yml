@@ -10,7 +10,9 @@ build:
   environment:
     php:
       version: 8.2
-
+  tests:
+    override:
+      command: "php -v"
   nodes:
     analysis:
       tests:
