@@ -31,9 +31,9 @@ class CrudTest extends TestCase implements ConstantsInterface
      */
     protected function tearDown(): void
     {
-        foreach ($this->getAllDocuments() as $document) {
-            $this->deleteDocument($document['Ref']);
-        }
+//        foreach ($this->getAllDocuments() as $document) {
+//            $this->deleteDocument($document['Ref']);
+//        }
     }
 
     /**
