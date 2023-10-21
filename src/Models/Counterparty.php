@@ -44,7 +44,7 @@ class Counterparty implements ModelInterface
      *      'Phone'                 => (string) Phone number. Required.
      *      'Email'                 => (string) Email. Required.
      *      'CounterpartyProperty'  => (string) Counterparty property. Required.
-     *    ]
+     *    ];
      * @return array
      * @throws NovaPoshtaApiException
      */
@@ -61,7 +61,7 @@ class Counterparty implements ModelInterface
      *    $counterparty = [
      *      'EDRPOU'                => (string) EDRPOU. Required.
      *      'CounterpartyProperty'  => (string) Counterparty property. Optional.
-     *    ]
+     *    ];
      * @return array
      * @throws NovaPoshtaApiException
      */
@@ -83,7 +83,7 @@ class Counterparty implements ModelInterface
      *      'Phone'                 => (string) Phone number. Optional.
      *      'Email'                 => (string) Email. Optional.
      *      'CounterpartyProperty'  => (string) Counterparty property. Required.
-     *    ]
+     *    ];
      * @return array
      * @throws NovaPoshtaApiException
      */
