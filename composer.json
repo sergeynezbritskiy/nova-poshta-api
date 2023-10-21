@@ -29,15 +29,16 @@
         "sort-packages": true
     },
     "scripts": {
-        "phpcs": "vendor/bin/phpcs --standard=phpcs.xml",
-        "fix": "vendor/bin/phpcbf --standard=phpcs.xml",
-        "phpmd": "vendor/bin/phpmd src,tests text phpmd.xml",
-        "phpstan": "vendor/bin/phpstan analyse src tests --level=6",
+        "phpcs": "XDEBUG_MODE=off vendor/bin/phpcs --standard=phpcs.xml",
+        "fix": "XDEBUG_MODE=off vendor/bin/phpcbf --standard=phpcs.xml",
+        "phpmd": "XDEBUG_MODE=off vendor/bin/phpmd src,tests text phpmd.xml",
+        "phpstan": "XDEBUG_MODE=off vendor/bin/phpstan analyse src tests --level=6",
         "tests": "XDEBUG_MODE=coverage vendor/bin/phpunit --stop-on-failure --stop-on-error --coverage-html=var/reports/coverage --coverage-clover=var/reports/coverage.xml",
-        "tests-debug": "XDEBUG_MODE=coverage vendor/bin/phpunit  --coverage-html=var/reports/coverage --coverage-clover=var/reports/coverage.xml",
+        "tests-debug": "vendor/bin/phpunit  --coverage-html=var/reports/coverage --coverage-clover=var/reports/coverage.xml",
         "all": [
             "@phpcs",
             "@phpmd",
+            "@phpstan",
             "@tests"
         ]
     },
