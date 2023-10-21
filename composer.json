@@ -18,6 +18,7 @@
         "guzzlehttp/guzzle": "^7.5"
     },
     "require-dev": {
+        "phpcompatibility/php-compatibility": "^9.3",
         "phpmd/phpmd": "^2.13",
         "phpstan/phpstan": "^1.10",
         "phpunit/phpunit": "^10.0",
@@ -28,8 +29,8 @@
         "sort-packages": true
     },
     "scripts": {
-        "phpcs": "vendor/bin/phpcs -sp --standard=PSR12 src tests",
-        "fix": "vendor/bin/phpcbf -sp --standard=PSR12 src tests",
+        "phpcs": "vendor/bin/phpcs --standard=phpcs.xml",
+        "fix": "vendor/bin/phpcbf --standard=phpcs.xml",
         "phpmd": "vendor/bin/phpmd src,tests text phpmd.xml",
         "phpstan": "vendor/bin/phpstan analyse src tests --level=6",
         "tests": "XDEBUG_MODE=coverage vendor/bin/phpunit --stop-on-failure --stop-on-error --coverage-html=var/reports/coverage --coverage-clover=var/reports/coverage.xml",

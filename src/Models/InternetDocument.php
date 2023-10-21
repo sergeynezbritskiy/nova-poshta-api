@@ -60,7 +60,7 @@ class InternetDocument implements ModelInterface
      *                'Amount' => (float)
      *            ],
      *            ...
-     *        ]
+     *        ],
      *        'RedeliveryCalculate' => [ Back delivery. Optional
      *            [
      *                'CargoType' => (string), e.g. Money
@@ -81,7 +81,7 @@ class InternetDocument implements ModelInterface
      *        'PackCount'           => (string) The amount of packing, Optional
      *        'PackRef'             => (string) Packing identifier (REF). Optional
      *        'Amount'              => (int) Amount of back delivery. Optional
-     *    ]
+     *    ];
      * @return array
      * @throws NovaPoshtaApiException
      */
