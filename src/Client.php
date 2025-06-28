@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SergeyNezbritskiy\NovaPoshta;
 
-use AllowDynamicProperties;
 use Exception;
 use GuzzleHttp\Client as HttpClient;
 use SergeyNezbritskiy\NovaPoshta\Models\Address;
@@ -25,9 +24,9 @@ use SergeyNezbritskiy\NovaPoshta\Models\InternetDocument;
  * @property ContactPerson $internetDocument
  * @see      https://developers.novaposhta.ua/documentation
  */
-#[AllowDynamicProperties] class Client
+class Client
 {
-    private const MODELS_MAP = [
+    private const array MODELS_MAP = [
         'address' => Address::class,
         'counterparty' => Counterparty::class,
         'contactPerson' => ContactPerson::class,

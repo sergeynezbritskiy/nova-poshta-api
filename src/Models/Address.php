@@ -11,7 +11,7 @@ use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 
 class Address implements ModelInterface
 {
-    private const MODEL_NAME = 'Address';
+    private const string MODEL_NAME = 'Address';
     private Connection $connection;
 
     /**
@@ -45,11 +45,11 @@ class Address implements ModelInterface
      * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a1329635-8512-11ec-8ced-005056b2dbe1
      * @param string $streetName
      * @param string $settlementRef
-     * @param int|null $limit
+     * @param int $limit
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function searchSettlementStreets(string $streetName, string $settlementRef, int $limit = null): array
+    public function searchSettlementStreets(string $streetName, string $settlementRef, int $limit = 0): array
     {
         $params = array_filter([
             'StreetName' => $streetName,
@@ -68,7 +68,7 @@ class Address implements ModelInterface
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function save(string $counterpartyRef, array $address, string $note = null): array
+    public function save(string $counterpartyRef, array $address, ?string $note = null): array
     {
         if ($note && strlen($note) > 40) {
             throw new RuntimeException('Note exceeds the limit of 40 symbols');
@@ -87,11 +87,11 @@ class Address implements ModelInterface
     /**
      * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a19ba934-8512-11ec-8ced-005056b2dbe1
      * @param array $address
-     * @param string|null $note
+     * @param string $note
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function update(array $address, string $note = null): array
+    public function update(array $address, string $note = ''): array
     {
         if ($note && strlen($note) > 40) {
             throw new RuntimeException('Note exceeds the limit of 40 symbols');
@@ -123,12 +123,12 @@ class Address implements ModelInterface
      * https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a1c42723-8512-11ec-8ced-005056b2dbe1
      * @param array $filters
      * @param bool $warehouse
-     * @param int|null $page
+     * @param int $page
      * @param int $limit
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function getSettlements(array $filters, bool $warehouse, int $page = null, int $limit = 150): array
+    public function getSettlements(array $filters, bool $warehouse, int $page = 0, int $limit = 150): array
     {
         $params = array_filter([
             'AreaRef' => $filters['AreaRef'] ?? null,
@@ -146,11 +146,11 @@ class Address implements ModelInterface
      * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a1e6f0a7-8512-11ec-8ced-005056b2dbe1
      * @param int $page
      * @param int $limit
-     * @param string|null $search
+     * @param string $search
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function getCities(int $page = 1, int $limit = PHP_INT_MAX, string $search = null): array
+    public function getCities(int $page = 1, int $limit = PHP_INT_MAX, string $search = ''): array
     {
         $params = array_filter([
             'Page' => $page,
@@ -205,12 +205,12 @@ class Address implements ModelInterface
      * @see https://developers.novaposhta.ua/view/model/a0cf0f5f-8512-11ec-8ced-005056b2dbe1/method/a27c20d7-8512-11ec-8ced-005056b2dbe1
      * @param string $cityRef
      * @param string $findByString
-     * @param int|null $page
-     * @param int|null $limit
+     * @param int $page
+     * @param int $limit
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function getStreet(string $cityRef, string $findByString, int $page = null, int $limit = null): array
+    public function getStreet(string $cityRef, string $findByString, int $page = 0, int $limit = 0): array
     {
         $params = array_filter([
             'CityRef' => $cityRef,

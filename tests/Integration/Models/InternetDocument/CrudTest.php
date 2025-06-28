@@ -27,7 +27,6 @@ class CrudTest extends TestCase implements ConstantsInterface
 
     /**
      * @return void
-     * @throws NovaPoshtaApiException
      */
     protected function tearDown(): void
     {
