@@ -11,28 +11,14 @@ interface ConstantsInterface
 
     /**
      * Counterparty Ref
+     * Приватна Особа Іванов Іван Іванович
      */
-    public const string COUNTERPARTY_REF = '4d062b9d-b88e-11ed-a60f-48df37b921db';
+    public const string COUNTERPARTY_REF = '85d18dbb-b8fa-11ed-a60f-48df37b921db';
 
     /**
      * Вулиця Тимурiвцiв
      */
     public const string STREET_REF = 'a7503d2c-8c06-11de-9467-001ec9d9f7b7';
-
-    /**
-     * Aдреса: вул. Тимурівців вул. 101a кв. 94 This address is for testing (created)
-     */
-    public const string ADDRESS_REF_KHARKIV = '42f70137-25ae-11ee-a60f-48df37b921db';
-
-    /**
-     * Aдреса: вул. Хрещатик
-     */
-    public const string ADDRESS_REF_KYIV = 'ed92c4be-25b3-11ee-a60f-48df37b921db';
-
-    /**
-     * Вулиця Хрещатик
-     */
-    public const string KHRESHCHATYK_STREET_REF = '0f0d85b0-4143-11dd-9198-001d60451983';
 
     /**
      * Ідентифікатор типу відправлення Шина R-13, з довідника Види шин та дисків

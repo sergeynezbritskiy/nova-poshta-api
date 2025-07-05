@@ -27,12 +27,15 @@ class CrudTest extends TestCase implements ConstantsInterface
 
     /**
      * @return void
+     * @throws NovaPoshtaApiException
      */
     protected function tearDown(): void
     {
-//        foreach ($this->getAllDocuments() as $document) {
-//            $this->deleteDocument($document['Ref']);
-//        }
+        if (filter_var(getenv('CLEAR_DOCUMENTS'), FILTER_VALIDATE_BOOL)) {
+            foreach ($this->getAllDocuments() as $document) {
+                $this->deleteDocument($document['Ref']);
+            }
+        }
     }
 
     /**
@@ -40,45 +43,36 @@ class CrudTest extends TestCase implements ConstantsInterface
      */
     public function testCrudDocument(): void
     {
-//        $counterpartyModel = new \SergeyNezbritskiy\NovaPoshta\Models\Counterparty($this->getConnection());
-//        $addressModel = new \SergeyNezbritskiy\NovaPoshta\Models\Address($this->getConnection());
+//        In order to get sender and recipient refs create a document in UI and fetch this document
+//        $documents = $this->getAllDocuments();
+//        'Sender' => '85d0d7a2-b8fa-11ed-a60f-48df37b921db',
+//        'ContactSender' => 'e8253e73-cc91-11ed-a60f-48df37b921db',
+//        'SenderAddress' => 'dbbc2098-25b3-11ee-a60f-48df37b921db',
+//        'Recipient' => '85d18dbb-b8fa-11ed-a60f-48df37b921db',
+//        'RecipientAddress' => '1ec09d88-e1c2-11e3-8c4a-0050568002cf',
+//        'ContactRecipient' => '4184cb87-59ec-11f0-a1d5-48df37b921da',
 
-//        $recipient = $counterpartyModel->savePrivatePerson([
-//            'FirstName' => 'Петро',
-//            'MiddleName' => 'Григорович',
-//            'LastName' => 'Порошенко',
-//            'Phone' => 380501112233,
-//            'Email' => 'pporoshenko@gmail.com',
-//            'CounterpartyProperty' => Counterparty::COUNTERPARTY_PROPERTY_RECIPIENT,
-//        ]); // 4d21c8c7-b88e-11ed-a60f-48df37b921db
-        $recipientRef = '4d21c8c7-b88e-11ed-a60f-48df37b921db';
+        $senderRef = '85d0d7a2-b8fa-11ed-a60f-48df37b921db';
+        $senderContactRef = 'e8253e73-cc91-11ed-a60f-48df37b921db';
+        $senderAddressRef = 'dbbc2098-25b3-11ee-a60f-48df37b921db';
 
-//        $address = $addressModel->save($recipientRef, [
-//            'StreetRef' => self::KHRESHCHATYK_STREET_REF,
-//            'BuildingNumber' => '20',
-//            'Flat' => '12',
-//        ]);
-        $addressRef = 'cecaac32-25bb-11ee-a60f-48df37b921db';
-
-//        $contactPersons = $counterpartyModel->getCounterpartyContactPersons(self::COUNTERPARTY_REF);
-        $senderContactRef = '4d06cbac-b88e-11ed-a60f-48df37b921db';
-
-//        $contactPersons = $counterpartyModel->getCounterpartyContactPersons($recipientRef);
-        $recipientContactRef = '45b55250-25bb-11ee-a60f-48df37b921db';
+        $recipientRef = '85d18dbb-b8fa-11ed-a60f-48df37b921db';
+        $recipientContactRef = '4184cb87-59ec-11f0-a1d5-48df37b921da';
+        $recipientAddressRef = '1ec09d88-e1c2-11e3-8c4a-0050568002cf';
 
         //create document
         $params = [
-            'Sender' => self::COUNTERPARTY_REF,
+            'Sender' => $senderRef,
             'CitySender' => self::CITY_REF_KHARKIV,
-            'SenderAddress' => self::ADDRESS_REF_KHARKIV,
+            'SenderAddress' => $senderAddressRef,
             'ContactSender' => $senderContactRef,
-            'SendersPhone' => 380505511696,
+            'SendersPhone' => 380507778797,
 
             'Recipient' => $recipientRef,
             'CityRecipient' => self::CITY_REF_KYIV,
-            'RecipientAddress' => $addressRef,
+            'RecipientAddress' => $recipientAddressRef,
             'ContactRecipient' => $recipientContactRef,
-            'RecipientsPhone' => 380505511696,
+            'RecipientsPhone' => 380507778797,
 
             'DateTime' => date('d.m.Y'),
             'CargoType' => InternetDocument::CARGO_TYPE_CARGO,
@@ -87,7 +81,7 @@ class CrudTest extends TestCase implements ConstantsInterface
             'ServiceType' => InternetDocument::SERVICE_TYPE_DOORS_DOORS,
             'PayerType' => InternetDocument::PAYER_TYPE_RECIPIENT,
             'PaymentMethod' => InternetDocument::PAYMENT_TYPE_CASH,
-            'Description' => 'Це тестове замовлення, не треба його обробляти'
+            'Description' => 'ЦЕ ТЕСТОВЕ ЗАМОВЛЕННЯ, В ЖОДНОМУ РАЗІ НЕ ОБРОБЛЯТИ !!!'
         ];
 
         $actualResult = $this->model->save($params);
@@ -190,10 +184,10 @@ class CrudTest extends TestCase implements ConstantsInterface
      */
     private function gulp(): void
     {
-        $useGulp = getenv('USE_GULP');
+        $gulp = (int)getenv('GULP');
 
-        if ($useGulp) {
-            sleep(5);
+        if ($gulp) {
+            sleep($gulp);
         }
     }
 }

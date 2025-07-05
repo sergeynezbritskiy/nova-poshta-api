@@ -14,7 +14,10 @@
     <coverage/>
     <php>
         <env name="API_KEY" value=""/>
-        <env name="USE_GULP" value="true"/>
+        <!-- the amount of time to wait after creating a document before updating, in sec -->
+        <env name="GULP" value="5"/>
+        <!-- remove all documents after testing internet document crud -->
+        <env name="CLEAR_DOCUMENTS" value="false"/>
         <!-- remove all contact persons before testing contact person crud -->
         <env name="CLEAR_CONTACT_PERSONS" value="false"/>
     </php>

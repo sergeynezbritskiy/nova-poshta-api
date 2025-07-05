@@ -153,8 +153,8 @@ class Address implements ModelInterface
     public function getCities(int $page = 1, int $limit = PHP_INT_MAX, string $search = ''): array
     {
         $params = array_filter([
-            'Page' => $page,
-            'Limit' => $limit,
+            'Page' => (string)$page,
+            'Limit' => (string)$limit,
             'FindByString' => $search,
         ]);
         return $this->connection->post(self::MODEL_NAME, 'getCities', $params);

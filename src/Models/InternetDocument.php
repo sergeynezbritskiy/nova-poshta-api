@@ -51,7 +51,7 @@ class InternetDocument implements ModelInterface
      *        'CitySender'          => (string) City ref. Required
      *        'CityRecipient'       => (string) City ref. Required
      *        'Weight'              => (string) Minimal value - 0.1. Required
-     *        'ServiceTYpe'         => (string) Optional
+     *        'ServiceType'         => (string) Required
      *        'Cost'                => (float)  Optional, default - 300.00
      *        'CargoType'           => (string) Cargo type. see self::CARGO_TYPE_* constants, Optional
      *        'CargoDetails'        => [
