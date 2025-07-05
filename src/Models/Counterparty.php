@@ -18,11 +18,11 @@ use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
  */
 class Counterparty implements ModelInterface
 {
-    public const string COUNTERPARTY_PROPERTY_SENDER = 'Sender';
-    public const string COUNTERPARTY_PROPERTY_RECIPIENT = 'Recipient';
-    public const string COUNTERPARTY_PROPERTY_THIRD_PERSON = 'ThirdPerson';
+    public const COUNTERPARTY_PROPERTY_SENDER = 'Sender';
+    public const COUNTERPARTY_PROPERTY_RECIPIENT = 'Recipient';
+    public const COUNTERPARTY_PROPERTY_THIRD_PERSON = 'ThirdPerson';
 
-    private const string MODEL_NAME = 'Counterparty';
+    private const MODEL_NAME = 'Counterparty';
 
     private Connection $connection;
 

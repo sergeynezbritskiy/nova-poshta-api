@@ -15,8 +15,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class Connection
 {
-    private const string API_URI = 'https://api.novaposhta.ua/v2.0/json/';
-    private const string ERROR_MSG_TEMPLATE = 'Connection to Nova Poshta API failed: %s';
+    private const API_URI = 'https://api.novaposhta.ua/v2.0/json/';
+    private const ERROR_MSG_TEMPLATE = 'Connection to Nova Poshta API failed: %s';
     private string $apiKey;
     private HttpClient $client;
 

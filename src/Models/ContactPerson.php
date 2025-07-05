@@ -10,8 +10,8 @@ use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 
 class ContactPerson implements ModelInterface
 {
-    private const string MODEL_NAME = 'ContactPerson';
-    private const int CONTACT_PERSON_NOT_FOUND_CODE = 20000400480;
+    private const MODEL_NAME = 'ContactPerson';
+    private const CONTACT_PERSON_NOT_FOUND_CODE = 20000400480;
 
     private Connection $connection;
 

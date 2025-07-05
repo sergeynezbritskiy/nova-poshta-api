@@ -10,7 +10,7 @@ use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 
 class Common implements ModelInterface
 {
-    private const string MODEL_NAME = 'Common';
+    private const MODEL_NAME = 'Common';
     private Connection $connection;
 
     /**

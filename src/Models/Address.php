@@ -11,7 +11,7 @@ use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 
 class Address implements ModelInterface
 {
-    private const string MODEL_NAME = 'Address';
+    private const MODEL_NAME = 'Address';
     private Connection $connection;
 
     /**

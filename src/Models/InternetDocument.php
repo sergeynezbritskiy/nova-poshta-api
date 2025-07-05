@@ -14,24 +14,24 @@ use SergeyNezbritskiy\NovaPoshta\NovaPoshtaApiException;
 
 class InternetDocument implements ModelInterface
 {
-    public const string CARGO_TYPE_CARGO = 'Cargo';
-    public const string CARGO_TYPE_DOCUMENTS = 'Documents';
-    public const string CARGO_TYPE_TIRES_WHEELS = 'TiresWheels';
-    public const string CARGO_TYPE_PALLET = 'Pallet';
+    public const CARGO_TYPE_CARGO = 'Cargo';
+    public const CARGO_TYPE_DOCUMENTS = 'Documents';
+    public const CARGO_TYPE_TIRES_WHEELS = 'TiresWheels';
+    public const CARGO_TYPE_PALLET = 'Pallet';
 
-    public const string SERVICE_TYPE_DOORS_DOORS = 'DoorsDoors';
-    public const string SERVICE_TYPE_DOORS_WAREHOUSE = 'DoorsWarehouse';
-    public const string SERVICE_TYPE_WAREHOUSE_DOORS = 'WarehouseDoors';
-    public const string SERVICE_TYPE_WAREHOUSE_WAREHOUSE = 'WarehouseWarehouse';
+    public const SERVICE_TYPE_DOORS_DOORS = 'DoorsDoors';
+    public const SERVICE_TYPE_DOORS_WAREHOUSE = 'DoorsWarehouse';
+    public const SERVICE_TYPE_WAREHOUSE_DOORS = 'WarehouseDoors';
+    public const SERVICE_TYPE_WAREHOUSE_WAREHOUSE = 'WarehouseWarehouse';
 
-    public const string PAYER_TYPE_SENDER = 'Sender';
-    public const string PAYER_TYPE_RECIPIENT = 'Recipient';
-    public const string PAYER_TYPE_THIRD_PERSON = 'ThirdPerson';
+    public const PAYER_TYPE_SENDER = 'Sender';
+    public const PAYER_TYPE_RECIPIENT = 'Recipient';
+    public const PAYER_TYPE_THIRD_PERSON = 'ThirdPerson';
 
-    public const string PAYMENT_TYPE_CASH = 'Cash';
-    public const string PAYMENT_TYPE_NON_CASH = 'NonCash';
+    public const PAYMENT_TYPE_CASH = 'Cash';
+    public const PAYMENT_TYPE_NON_CASH = 'NonCash';
 
-    private const string MODEL_NAME = 'InternetDocument';
+    private const MODEL_NAME = 'InternetDocument';
 
     private Connection $connection;
 
