@@ -29,10 +29,23 @@ class GetBackwardDeliveryCargoTypesTest extends TestCase
      */
     public function testGetBackwardDeliveryCargoTypes(): void
     {
+        $this->gulp();
         $actualResult = $this->model->getBackwardDeliveryCargoTypes();
         $this->assertNotEmpty($actualResult);
         $entity = array_shift($actualResult);
         $expectedProperties = ['Description', 'Ref'];
         $this->assertEntity($entity, $expectedProperties);
+    }
+
+    /**
+     * @return void
+     */
+    private function gulp(): void
+    {
+        $gulp = (int)getenv('GULP');
+
+        if ($gulp) {
+            sleep($gulp);
+        }
     }
 }

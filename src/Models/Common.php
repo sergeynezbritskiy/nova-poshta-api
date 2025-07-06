@@ -24,11 +24,11 @@ class Common implements ModelInterface
     /**
      * @see https://developers.novaposhta.ua/view/model/a55b2c64-8512-11ec-8ced-005056b2dbe1/method/a56d5c1c-8512-11ec-8ced-005056b2dbe1
      * @param string $recipientCityRef
-     * @param string|null $dateTime
+     * @param string $dateTime
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function getTimeIntervals(string $recipientCityRef, string $dateTime = null): array
+    public function getTimeIntervals(string $recipientCityRef, string $dateTime = ''): array
     {
         $params = array_filter([
             'RecipientCityRef' => $recipientCityRef,
@@ -99,12 +99,12 @@ class Common implements ModelInterface
 
     /**
      * @see https://developers.novaposhta.ua/view/model/a55b2c64-8512-11ec-8ced-005056b2dbe1/method/a697db47-8512-11ec-8ced-005056b2dbe1
-     * @param string|null $findByString
-     * @param int|null $page
+     * @param string $findByString
+     * @param int $page
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function getCargoDescriptionList(string $findByString = null, int $page = null): array
+    public function getCargoDescriptionList(string $findByString = '', int $page = 0): array
     {
         $params = array_filter([
             'FindByString' => $findByString,

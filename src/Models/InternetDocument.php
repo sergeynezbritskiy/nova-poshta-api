@@ -51,7 +51,7 @@ class InternetDocument implements ModelInterface
      *        'CitySender'          => (string) City ref. Required
      *        'CityRecipient'       => (string) City ref. Required
      *        'Weight'              => (string) Minimal value - 0.1. Required
-     *        'ServiceTYpe'         => (string) Optional
+     *        'ServiceType'         => (string) Required
      *        'Cost'                => (float)  Optional, default - 300.00
      *        'CargoType'           => (string) Cargo type. see self::CARGO_TYPE_* constants, Optional
      *        'CargoDetails'        => [
@@ -113,13 +113,13 @@ class InternetDocument implements ModelInterface
     /**
      * @see https://developers.novaposhta.ua/view/model/a90d323c-8512-11ec-8ced-005056b2dbe1/method/a9d22b34-8512-11ec-8ced-005056b2dbe1
      * @param array $params
-     * @param int|null $page
+     * @param int $page
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function getDocumentList(array $params, int $page = null): array
+    public function getDocumentList(array $params, int $page = 0): array
     {
-        if ($page !== null) {
+        if ($page !== 0) {
             $params['Page'] = $page;
         }
         return $this->connection->post(self::MODEL_NAME, 'getDocumentList', $params);

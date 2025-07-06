@@ -32,18 +32,11 @@ class GetDocumentPriceTest extends TestCase implements ConstantsInterface
         $params = [
             'CitySender' => self::CITY_REF_KHARKIV,
             'CityRecipient' => self::CITY_REF_KYIV,
+            'ServiceType' => InternetDocument::SERVICE_TYPE_WAREHOUSE_WAREHOUSE,
             'Weight' => 34.4,
         ];
         $actualResult = $this->model->getDocumentPrice($params);
-        $this->assertEntity($actualResult, [
-            'CostDoorsDoors',
-            'CostDoorsWarehouse',
-            'CostWarehouseWarehouse',
-            'CostWarehouseDoors',
-            'CostDoorsPostomat',
-            'CostWarehousePostomat',
-            'AssessedCost',
-        ]);
+        $this->assertEntity($actualResult, ['Cost', 'AssessedCost']);
     }
 
     /**

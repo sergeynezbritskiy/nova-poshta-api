@@ -37,14 +37,17 @@ class Counterparty implements ModelInterface
     /**
      * @see https://developers.novaposhta.ua/view/model/a28f4b04-8512-11ec-8ced-005056b2dbe1/method/0ae5dd75-8a5f-11ec-8ced-005056b2dbe1
      * @param array $counterparty Array containing the necessary params.
-     *    $counterparty = [
-     *      'FirstName'             => (string) First name. Required.
-     *      'MiddleName'            => (string) Middle name. Required.
-     *      'LastName'              => (string) Last name. Required.
-     *      'Phone'                 => (string) Phone number. Required.
-     *      'Email'                 => (string) Email. Required.
-     *      'CounterpartyProperty'  => (string) Counterparty property. Required.
-     *    ];
+     * Example:
+     * ```
+     * $counterparty = [
+     *   'FirstName'             => (string) First name. Required.
+     *   'MiddleName'            => (string) Middle name. Required.
+     *   'LastName'              => (string) Last name. Required.
+     *   'Phone'                 => (string) Phone number. Required.
+     *   'Email'                 => (string) Email. Required.
+     *   'CounterpartyProperty'  => (string) Counterparty property. Required.
+     * ];
+     * ```
      * @return array
      * @throws NovaPoshtaApiException
      */
@@ -136,12 +139,12 @@ class Counterparty implements ModelInterface
     /**
      * @see https://developers.novaposhta.ua/view/model/a28f4b04-8512-11ec-8ced-005056b2dbe1/method/a37a06df-8512-11ec-8ced-005056b2dbe1
      * @param string $counterpartyProperty
-     * @param string|null $search
+     * @param string $search
      * @param int $page
      * @return array
      * @throws NovaPoshtaApiException
      */
-    public function getCounterparties(string $counterpartyProperty, string $search = null, int $page = 1): array
+    public function getCounterparties(string $counterpartyProperty, string $search = '', int $page = 1): array
     {
         $params = array_filter([
             'CounterpartyProperty' => $counterpartyProperty,
